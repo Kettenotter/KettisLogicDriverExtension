@@ -1,0 +1,20 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\kettislogicdriverextension\\module.kettislogicdriverextension.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\perforce\\splinterra 5.3\\intermediate\\build\\win64\\x64\\splinterraeditor\\development\\engine\\sharedpch.engine.cpp17.inclorderunreal5_0.h.pch",
+        "Includes": [
+            "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\kettislogicdriverextension\\definitions.kettislogicdriverextension.h",
+            "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\intermediate\\build\\win64\\unrealeditor\\inc\\kettislogicdriverextension\\uht\\kettislogicdriverbplibrary.gen.cpp",
+            "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\source\\kettislogicdriverextension\\public\\kettislogicdriverbplibrary.h",
+            "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\intermediate\\build\\win64\\unrealeditor\\inc\\kettislogicdriverextension\\uht\\kettislogicdriverbplibrary.generated.h",
+            "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\intermediate\\build\\win64\\unrealeditor\\inc\\kettislogicdriverextension\\uht\\kettislogicdriverextension.init.gen.cpp",
+            "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\source\\kettislogicdriverextension\\private\\kettislogicdriverbplibrary.cpp",
+            "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\source\\kettislogicdriverextension\\private\\kettislogicdriverextension.cpp",
+            "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\source\\kettislogicdriverextension\\public\\kettislogicdriverextension.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

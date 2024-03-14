@@ -1,0 +1,8 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.KettisLogicDriverExtension.cpp.obj": [
+			"KettisLogicDriverExtension.cpp.obj"
+		]
+	}
+}
