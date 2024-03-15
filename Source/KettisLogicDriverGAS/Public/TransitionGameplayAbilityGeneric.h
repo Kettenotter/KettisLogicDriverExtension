@@ -14,13 +14,13 @@ struct FOnAttributeChangeData;
  * 
  */
 UCLASS()
-class KETTISLOGICDRIVERGAS_API UTransitionOnGameplayTagPresent : public UTransitionExtensionDelegateBinding
+class KETTISLOGICDRIVERGAS_API UTransitionOnGameplayTag : public UTransitionExtensionDelegateBinding
 {
 	GENERATED_BODY()
 
 public:
 
-	UTransitionOnGameplayTagPresent(const FObjectInitializer& ObjectInitializer);
+	UTransitionOnGameplayTag(const FObjectInitializer& ObjectInitializer);
 
 protected:
 

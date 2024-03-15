@@ -4,4 +4,6 @@
 #include "C:/Perforce/Splinterra 5.3/Plugins/KettisLogicDriverExtension/Intermediate/Build/Win64/UnrealEditor/Inc/KettisLogicDriverGAS/UHT/TransitionGameplayAbilityGeneric.gen.cpp"
 #include "C:/Perforce/Splinterra 5.3/Plugins/KettisLogicDriverExtension/Intermediate/Build/Win64/UnrealEditor/Inc/KettisLogicDriverGAS/UHT/TransitionGameplayAbilitySpecific.gen.cpp"
 #include "C:/Perforce/Splinterra 5.3/Plugins/KettisLogicDriverExtension/Source/KettisLogicDriverGAS/Private/KettisLogicDriverGAS.cpp"
+#include "C:/Perforce/Splinterra 5.3/Plugins/KettisLogicDriverExtension/Source/KettisLogicDriverGAS/Private/TransitionExtensionBase.cpp"
 #include "C:/Perforce/Splinterra 5.3/Plugins/KettisLogicDriverExtension/Source/KettisLogicDriverGAS/Private/TransitionGameplayAbilityGeneric.cpp"
+#include "C:/Perforce/Splinterra 5.3/Plugins/KettisLogicDriverExtension/Source/KettisLogicDriverGAS/Private/TransitionGameplayAbilitySpecific.cpp"

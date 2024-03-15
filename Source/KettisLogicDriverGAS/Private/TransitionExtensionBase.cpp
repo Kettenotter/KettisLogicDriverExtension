@@ -4,6 +4,7 @@
 
 #include "SMStateInstance.h"
 #include "AbilitySystemGlobals.h"
+#include "AbilitySystemInterface.h"
 
 
 UTransitionExtensionBase::UTransitionExtensionBase(const FObjectInitializer& ObjectInitializer)
@@ -108,7 +109,12 @@ bool UTransitionExtensionDelegateBinding::TestCondition()
 
 UAbilitySystemComponent* UTransitionExtensionDelegateBinding::GetAbilitySystemComponent() const
 {
-	return UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Cast<AActor>(GetContext()), false);
+	const IAbilitySystemInterface* ASI = Cast<IAbilitySystemInterface>(GetContext());
+	if (ASI)
+	{
+		return ASI->GetAbilitySystemComponent();
+	}
+	return nullptr;
 }
 
 void UTransitionExtensionDelegateBinding::OnTransitionInitialized_Implementation()

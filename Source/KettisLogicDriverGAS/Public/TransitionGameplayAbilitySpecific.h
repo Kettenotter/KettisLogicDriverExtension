@@ -12,14 +12,7 @@
 /**
  * 
  */
-UCLASS(
-	
-#if WITH_KETTENOTTER_SPECIFIC
-#else
-	NotBlueprintable, NotBlueprintType, Abstract
-#endif
-
-	)
+UCLASS()
 class KETTISLOGICDRIVERGAS_API UTransitionOnCanPayMana : public UTransitionExtensionDelegateBinding
 {
 	

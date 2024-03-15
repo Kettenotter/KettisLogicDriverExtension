@@ -7,8 +7,8 @@
 			"TransitionGameplayAbilityGeneric.gen.cpp.obj",
 			"TransitionGameplayAbilitySpecific.gen.cpp.obj",
 			"KettisLogicDriverGAS.cpp.obj",
-			"TransitionExtensionBase.cpp.obj",
 			"TransitionGameplayAbilityGeneric.cpp.obj",
+			"TransitionExtensionBase.cpp.obj",
 			"TransitionGameplayAbilitySpecific.cpp.obj"
 		]
 	}

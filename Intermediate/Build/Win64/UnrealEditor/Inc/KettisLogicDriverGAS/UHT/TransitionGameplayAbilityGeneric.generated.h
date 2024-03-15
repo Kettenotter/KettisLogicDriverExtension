@@ -21,23 +21,23 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilityGeneric_h_19_ACCESSORS
 #define FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilityGeneric_h_19_INCLASS_NO_PURE_DECLS \
 private: \
-	static void StaticRegisterNativesUTransitionOnGameplayTagPresent(); \
-	friend struct Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics; \
+	static void StaticRegisterNativesUTransitionOnGameplayTag(); \
+	friend struct Z_Construct_UClass_UTransitionOnGameplayTag_Statics; \
 public: \
-	DECLARE_CLASS(UTransitionOnGameplayTagPresent, UTransitionExtensionDelegateBinding, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/KettisLogicDriverGAS"), NO_API) \
-	DECLARE_SERIALIZER(UTransitionOnGameplayTagPresent)
+	DECLARE_CLASS(UTransitionOnGameplayTag, UTransitionExtensionDelegateBinding, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/KettisLogicDriverGAS"), NO_API) \
+	DECLARE_SERIALIZER(UTransitionOnGameplayTag)
 
 
 #define FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilityGeneric_h_19_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UTransitionOnGameplayTagPresent(UTransitionOnGameplayTagPresent&&); \
-	NO_API UTransitionOnGameplayTagPresent(const UTransitionOnGameplayTagPresent&); \
+	NO_API UTransitionOnGameplayTag(UTransitionOnGameplayTag&&); \
+	NO_API UTransitionOnGameplayTag(const UTransitionOnGameplayTag&); \
 public: \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UTransitionOnGameplayTagPresent); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UTransitionOnGameplayTagPresent); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UTransitionOnGameplayTagPresent) \
-	NO_API virtual ~UTransitionOnGameplayTagPresent();
+	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UTransitionOnGameplayTag); \
+	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UTransitionOnGameplayTag); \
+	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UTransitionOnGameplayTag) \
+	NO_API virtual ~UTransitionOnGameplayTag();
 
 
 #define FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilityGeneric_h_16_PROLOG
@@ -55,7 +55,7 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> KETTISLOGICDRIVERGAS_API UClass* StaticClass<class UTransitionOnGameplayTagPresent>();
+template<> KETTISLOGICDRIVERGAS_API UClass* StaticClass<class UTransitionOnGameplayTag>();
 
 #define FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilityGeneric_h_54_SPARSE_DATA
 #define FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilityGeneric_h_54_SPARSE_DATA_PROPERTY_ACCESSORS

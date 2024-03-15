@@ -36,6 +36,7 @@
 /FUNCTIONPADMIN:6
 "C:\Perforce\Splinterra 5.3\Intermediate\Build\Win64\x64\SplinterraEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp17.InclOrderUnreal5_0.h.obj"
 "C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverGAS\Module.KettisLogicDriverGAS.cpp.obj"
+"C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverGAS\TransitionExtensionBase.cpp.obj"
 "C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverGAS\TransitionGameplayAbilitySpecific.cpp.obj"
 "C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverGAS\Default.rc2.res"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\CoreUObject\UnrealEditor-CoreUObject.lib"

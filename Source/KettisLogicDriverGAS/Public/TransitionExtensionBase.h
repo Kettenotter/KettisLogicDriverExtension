@@ -49,7 +49,7 @@ protected:
 	void SetEditorColor(bool Status, bool Invalid = false);
 };
 
-UCLASS()
+UCLASS(meta=(PrioritizeCategories="Ability"), AutoExpandCategories="Ability", Category = "GameplayAbility")
 class KETTISLOGICDRIVERGAS_API UTransitionExtensionDelegateBinding : public UTransitionExtensionBase
 {
 	GENERATED_BODY()

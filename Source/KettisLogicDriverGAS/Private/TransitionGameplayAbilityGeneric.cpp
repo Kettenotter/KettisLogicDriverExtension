@@ -8,7 +8,7 @@
 #include "SMStateInstance.h"
 
 
-UTransitionOnGameplayTagPresent::UTransitionOnGameplayTagPresent(const FObjectInitializer& ObjectInitializer)
+UTransitionOnGameplayTag::UTransitionOnGameplayTag(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	SetEditorIconFromDataTable(FName("GameplayTag"));
@@ -16,19 +16,19 @@ UTransitionOnGameplayTagPresent::UTransitionOnGameplayTagPresent(const FObjectIn
 
 
 
-void UTransitionOnGameplayTagPresent::BindDelegates()
+void UTransitionOnGameplayTag::BindDelegates()
 {
 	Super::BindDelegates();
 	
 	
 	if (UAbilitySystemComponent* AbilitySystemComponent = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Cast<AActor>(GetContext()), false))
 	{
-		DelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &UTransitionOnGameplayTagPresent::TagChanged);
+		DelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &UTransitionOnGameplayTag::TagChanged);
 		
 	}
 }
 
-void UTransitionOnGameplayTagPresent::ClearDelegates()
+void UTransitionOnGameplayTag::ClearDelegates()
 {
 	Super::ClearDelegates();
 
@@ -40,7 +40,7 @@ void UTransitionOnGameplayTagPresent::ClearDelegates()
 }
 
 
-bool UTransitionOnGameplayTagPresent::TestCondition()
+bool UTransitionOnGameplayTag::TestCondition()
 {
 	if (const UAbilitySystemComponent* AbilitySystemComponent = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Cast<AActor>(GetContext()), false))
 	{
@@ -52,7 +52,7 @@ bool UTransitionOnGameplayTagPresent::TestCondition()
 }
 
 
-void UTransitionOnGameplayTagPresent::ConstructionScript_Implementation()
+void UTransitionOnGameplayTag::ConstructionScript_Implementation()
 {
 	Super::ConstructionScript_Implementation();
 

@@ -17,21 +17,21 @@ void EmptyLinkFunctionForGeneratedCodeTransitionGameplayAbilityGeneric() {}
 	KETTISLOGICDRIVERGAS_API UClass* Z_Construct_UClass_UTransitionExtensionDelegateBinding();
 	KETTISLOGICDRIVERGAS_API UClass* Z_Construct_UClass_UTransitionOnAttributeReachZero();
 	KETTISLOGICDRIVERGAS_API UClass* Z_Construct_UClass_UTransitionOnAttributeReachZero_NoRegister();
-	KETTISLOGICDRIVERGAS_API UClass* Z_Construct_UClass_UTransitionOnGameplayTagPresent();
-	KETTISLOGICDRIVERGAS_API UClass* Z_Construct_UClass_UTransitionOnGameplayTagPresent_NoRegister();
+	KETTISLOGICDRIVERGAS_API UClass* Z_Construct_UClass_UTransitionOnGameplayTag();
+	KETTISLOGICDRIVERGAS_API UClass* Z_Construct_UClass_UTransitionOnGameplayTag_NoRegister();
 	KETTISLOGICDRIVERGAS_API UClass* Z_Construct_UClass_UTransitionOnGameplayTagQuery();
 	KETTISLOGICDRIVERGAS_API UClass* Z_Construct_UClass_UTransitionOnGameplayTagQuery_NoRegister();
 	UPackage* Z_Construct_UPackage__Script_KettisLogicDriverGAS();
 // End Cross Module References
-	void UTransitionOnGameplayTagPresent::StaticRegisterNativesUTransitionOnGameplayTagPresent()
+	void UTransitionOnGameplayTag::StaticRegisterNativesUTransitionOnGameplayTag()
 	{
 	}
-	IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UTransitionOnGameplayTagPresent);
-	UClass* Z_Construct_UClass_UTransitionOnGameplayTagPresent_NoRegister()
+	IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UTransitionOnGameplayTag);
+	UClass* Z_Construct_UClass_UTransitionOnGameplayTag_NoRegister()
 	{
-		return UTransitionOnGameplayTagPresent::StaticClass();
+		return UTransitionOnGameplayTag::StaticClass();
 	}
-	struct Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics
+	struct Z_Construct_UClass_UTransitionOnGameplayTag_Statics
 	{
 		static UObject* (*const DependentSingletons[])();
 #if WITH_METADATA
@@ -45,13 +45,14 @@ void EmptyLinkFunctionForGeneratedCodeTransitionGameplayAbilityGeneric() {}
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UECodeGen_Private::FClassParams ClassParams;
 	};
-	UObject* (*const Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::DependentSingletons[])() = {
+	UObject* (*const Z_Construct_UClass_UTransitionOnGameplayTag_Statics::DependentSingletons[])() = {
 		(UObject* (*)())Z_Construct_UClass_UTransitionExtensionDelegateBinding,
 		(UObject* (*)())Z_Construct_UPackage__Script_KettisLogicDriverGAS,
 	};
-	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::DependentSingletons) < 16);
+	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnGameplayTag_Statics::DependentSingletons) < 16);
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::Class_MetaDataParams[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UTransitionOnGameplayTag_Statics::Class_MetaDataParams[] = {
+		{ "AutoExpandCategories", "Ability" },
 #if !UE_BUILD_SHIPPING
 		{ "Comment", "/**\n * \n */" },
 #endif
@@ -59,51 +60,52 @@ void EmptyLinkFunctionForGeneratedCodeTransitionGameplayAbilityGeneric() {}
 		{ "IncludePath", "TransitionGameplayAbilityGeneric.h" },
 		{ "ModuleRelativePath", "Public/TransitionGameplayAbilityGeneric.h" },
 		{ "ObjectInitializerConstructorDeclared", "" },
+		{ "PrioritizeCategories", "Ability" },
 	};
 #endif
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::NewProp_Tag_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UTransitionOnGameplayTag_Statics::NewProp_Tag_MetaData[] = {
 		{ "Category", "Ability" },
 		{ "ModuleRelativePath", "Public/TransitionGameplayAbilityGeneric.h" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::NewProp_Tag = { "Tag", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UTransitionOnGameplayTagPresent, Tag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::NewProp_Tag_MetaData), Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::NewProp_Tag_MetaData) }; // 2083603574
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::NewProp_Tag,
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UTransitionOnGameplayTag_Statics::NewProp_Tag = { "Tag", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UTransitionOnGameplayTag, Tag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnGameplayTag_Statics::NewProp_Tag_MetaData), Z_Construct_UClass_UTransitionOnGameplayTag_Statics::NewProp_Tag_MetaData) }; // 2083603574
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UTransitionOnGameplayTag_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UTransitionOnGameplayTag_Statics::NewProp_Tag,
 	};
-	const FCppClassTypeInfoStatic Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::StaticCppClassTypeInfo = {
-		TCppClassTypeTraits<UTransitionOnGameplayTagPresent>::IsAbstract,
+	const FCppClassTypeInfoStatic Z_Construct_UClass_UTransitionOnGameplayTag_Statics::StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<UTransitionOnGameplayTag>::IsAbstract,
 	};
-	const UECodeGen_Private::FClassParams Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::ClassParams = {
-		&UTransitionOnGameplayTagPresent::StaticClass,
+	const UECodeGen_Private::FClassParams Z_Construct_UClass_UTransitionOnGameplayTag_Statics::ClassParams = {
+		&UTransitionOnGameplayTag::StaticClass,
 		nullptr,
 		&StaticCppClassTypeInfo,
 		DependentSingletons,
 		nullptr,
-		Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::PropPointers,
+		Z_Construct_UClass_UTransitionOnGameplayTag_Statics::PropPointers,
 		nullptr,
 		UE_ARRAY_COUNT(DependentSingletons),
 		0,
-		UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::PropPointers),
+		UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnGameplayTag_Statics::PropPointers),
 		0,
 		0x009000A0u,
-		METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::Class_MetaDataParams), Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::Class_MetaDataParams)
+		METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnGameplayTag_Statics::Class_MetaDataParams), Z_Construct_UClass_UTransitionOnGameplayTag_Statics::Class_MetaDataParams)
 	};
-	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::PropPointers) < 2048);
-	UClass* Z_Construct_UClass_UTransitionOnGameplayTagPresent()
+	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnGameplayTag_Statics::PropPointers) < 2048);
+	UClass* Z_Construct_UClass_UTransitionOnGameplayTag()
 	{
-		if (!Z_Registration_Info_UClass_UTransitionOnGameplayTagPresent.OuterSingleton)
+		if (!Z_Registration_Info_UClass_UTransitionOnGameplayTag.OuterSingleton)
 		{
-			UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_UTransitionOnGameplayTagPresent.OuterSingleton, Z_Construct_UClass_UTransitionOnGameplayTagPresent_Statics::ClassParams);
+			UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_UTransitionOnGameplayTag.OuterSingleton, Z_Construct_UClass_UTransitionOnGameplayTag_Statics::ClassParams);
 		}
-		return Z_Registration_Info_UClass_UTransitionOnGameplayTagPresent.OuterSingleton;
+		return Z_Registration_Info_UClass_UTransitionOnGameplayTag.OuterSingleton;
 	}
-	template<> KETTISLOGICDRIVERGAS_API UClass* StaticClass<UTransitionOnGameplayTagPresent>()
+	template<> KETTISLOGICDRIVERGAS_API UClass* StaticClass<UTransitionOnGameplayTag>()
 	{
-		return UTransitionOnGameplayTagPresent::StaticClass();
+		return UTransitionOnGameplayTag::StaticClass();
 	}
-	DEFINE_VTABLE_PTR_HELPER_CTOR(UTransitionOnGameplayTagPresent);
-	UTransitionOnGameplayTagPresent::~UTransitionOnGameplayTagPresent() {}
+	DEFINE_VTABLE_PTR_HELPER_CTOR(UTransitionOnGameplayTag);
+	UTransitionOnGameplayTag::~UTransitionOnGameplayTag() {}
 	void UTransitionOnGameplayTagQuery::StaticRegisterNativesUTransitionOnGameplayTagQuery()
 	{
 	}
@@ -133,10 +135,12 @@ void EmptyLinkFunctionForGeneratedCodeTransitionGameplayAbilityGeneric() {}
 	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnGameplayTagQuery_Statics::DependentSingletons) < 16);
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UTransitionOnGameplayTagQuery_Statics::Class_MetaDataParams[] = {
+		{ "AutoExpandCategories", "Ability" },
 		{ "HideCategories", "SMTransitionInstance SMNodeInstance" },
 		{ "IncludePath", "TransitionGameplayAbilityGeneric.h" },
 		{ "ModuleRelativePath", "Public/TransitionGameplayAbilityGeneric.h" },
 		{ "ObjectInitializerConstructorDeclared", "" },
+		{ "PrioritizeCategories", "Ability" },
 	};
 #endif
 #if WITH_METADATA
@@ -211,10 +215,12 @@ void EmptyLinkFunctionForGeneratedCodeTransitionGameplayAbilityGeneric() {}
 	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnAttributeReachZero_Statics::DependentSingletons) < 16);
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UTransitionOnAttributeReachZero_Statics::Class_MetaDataParams[] = {
+		{ "AutoExpandCategories", "Ability" },
 		{ "HideCategories", "SMTransitionInstance SMNodeInstance" },
 		{ "IncludePath", "TransitionGameplayAbilityGeneric.h" },
 		{ "ModuleRelativePath", "Public/TransitionGameplayAbilityGeneric.h" },
 		{ "ObjectInitializerConstructorDeclared", "" },
+		{ "PrioritizeCategories", "Ability" },
 	};
 #endif
 #if WITH_METADATA
@@ -265,11 +271,11 @@ void EmptyLinkFunctionForGeneratedCodeTransitionGameplayAbilityGeneric() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilityGeneric_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UTransitionOnGameplayTagPresent, UTransitionOnGameplayTagPresent::StaticClass, TEXT("UTransitionOnGameplayTagPresent"), &Z_Registration_Info_UClass_UTransitionOnGameplayTagPresent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UTransitionOnGameplayTagPresent), 2884046767U) },
-		{ Z_Construct_UClass_UTransitionOnGameplayTagQuery, UTransitionOnGameplayTagQuery::StaticClass, TEXT("UTransitionOnGameplayTagQuery"), &Z_Registration_Info_UClass_UTransitionOnGameplayTagQuery, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UTransitionOnGameplayTagQuery), 97335246U) },
-		{ Z_Construct_UClass_UTransitionOnAttributeReachZero, UTransitionOnAttributeReachZero::StaticClass, TEXT("UTransitionOnAttributeReachZero"), &Z_Registration_Info_UClass_UTransitionOnAttributeReachZero, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UTransitionOnAttributeReachZero), 1107485516U) },
+		{ Z_Construct_UClass_UTransitionOnGameplayTag, UTransitionOnGameplayTag::StaticClass, TEXT("UTransitionOnGameplayTag"), &Z_Registration_Info_UClass_UTransitionOnGameplayTag, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UTransitionOnGameplayTag), 524809510U) },
+		{ Z_Construct_UClass_UTransitionOnGameplayTagQuery, UTransitionOnGameplayTagQuery::StaticClass, TEXT("UTransitionOnGameplayTagQuery"), &Z_Registration_Info_UClass_UTransitionOnGameplayTagQuery, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UTransitionOnGameplayTagQuery), 2247685218U) },
+		{ Z_Construct_UClass_UTransitionOnAttributeReachZero, UTransitionOnAttributeReachZero::StaticClass, TEXT("UTransitionOnAttributeReachZero"), &Z_Registration_Info_UClass_UTransitionOnAttributeReachZero, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UTransitionOnAttributeReachZero), 1345498294U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilityGeneric_h_2940962983(TEXT("/Script/KettisLogicDriverGAS"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilityGeneric_h_51252505(TEXT("/Script/KettisLogicDriverGAS"),
 		Z_CompiledInDeferFile_FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilityGeneric_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilityGeneric_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

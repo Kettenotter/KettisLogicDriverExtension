@@ -81,12 +81,16 @@
             "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\intermediate\\build\\win64\\unrealeditor\\inc\\kettislogicdrivergas\\uht\\transitiongameplayabilityspecific.generated.h",
             "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\source\\kettislogicdrivergas\\private\\kettislogicdrivergas.cpp",
             "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\source\\kettislogicdrivergas\\public\\kettislogicdrivergas.h",
-            "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\source\\kettislogicdrivergas\\private\\transitiongameplayabilitygeneric.cpp",
+            "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\source\\kettislogicdrivergas\\private\\transitionextensionbase.cpp",
+            "c:\\perforce\\splinterra 5.3\\plugins\\external\\logicdriver\\source\\smsystem\\public\\nodes\\states\\smstateinstance.h",
+            "c:\\perforce\\splinterra 5.3\\plugins\\external\\logicdriver\\intermediate\\build\\win64\\unrealeditor\\inc\\smsystem\\uht\\smstateinstance.generated.h",
             "c:\\program files\\epic games\\ue_5.3\\engine\\plugins\\runtime\\gameplayabilities\\source\\gameplayabilities\\public\\abilitysystemglobals.h",
             "c:\\program files\\epic games\\ue_5.3\\engine\\plugins\\runtime\\gameplayabilities\\source\\gameplayabilities\\public\\gameplayabilitiesmodule.h",
             "c:\\program files\\epic games\\ue_5.3\\engine\\plugins\\runtime\\gameplayabilities\\intermediate\\build\\win64\\unrealeditor\\inc\\gameplayabilities\\uht\\abilitysystemglobals.generated.h",
-            "c:\\perforce\\splinterra 5.3\\plugins\\external\\logicdriver\\source\\smsystem\\public\\nodes\\states\\smstateinstance.h",
-            "c:\\perforce\\splinterra 5.3\\plugins\\external\\logicdriver\\intermediate\\build\\win64\\unrealeditor\\inc\\smsystem\\uht\\smstateinstance.generated.h"
+            "c:\\program files\\epic games\\ue_5.3\\engine\\plugins\\runtime\\gameplayabilities\\source\\gameplayabilities\\public\\abilitysysteminterface.h",
+            "c:\\program files\\epic games\\ue_5.3\\engine\\plugins\\runtime\\gameplayabilities\\intermediate\\build\\win64\\unrealeditor\\inc\\gameplayabilities\\uht\\abilitysysteminterface.generated.h",
+            "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\source\\kettislogicdrivergas\\private\\transitiongameplayabilitygeneric.cpp",
+            "c:\\perforce\\splinterra 5.3\\plugins\\kettislogicdriverextension\\source\\kettislogicdrivergas\\private\\transitiongameplayabilityspecific.cpp"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

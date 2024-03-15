@@ -44,6 +44,7 @@
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\SlateCore\UnrealEditor-SlateCore.lib"
 "C:\Perforce\Splinterra 5.3\Plugins\External\LogicDriver\Intermediate\Build\Win64\x64\UnrealEditor\Development\SMSystem\UnrealEditor-SMSystem.lib"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Core\UnrealEditor-Core.lib"
+"..\Plugins\Runtime\GameplayAbilities\Intermediate\Build\Win64\x64\UnrealEditor\Development\GameplayAbilities\UnrealEditor-GameplayAbilities.lib"
 "delayimp.lib"
 "wininet.lib"
 "rpcrt4.lib"

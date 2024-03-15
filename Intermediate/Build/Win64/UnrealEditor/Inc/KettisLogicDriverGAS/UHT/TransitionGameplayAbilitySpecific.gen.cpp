@@ -38,6 +38,7 @@ void EmptyLinkFunctionForGeneratedCodeTransitionGameplayAbilitySpecific() {}
 	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UTransitionOnCanPayMana_Statics::DependentSingletons) < 16);
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UTransitionOnCanPayMana_Statics::Class_MetaDataParams[] = {
+		{ "AutoExpandCategories", "Ability" },
 #if !UE_BUILD_SHIPPING
 		{ "Comment", "/**\n * \n */" },
 #endif
@@ -45,6 +46,7 @@ void EmptyLinkFunctionForGeneratedCodeTransitionGameplayAbilitySpecific() {}
 		{ "IncludePath", "TransitionGameplayAbilitySpecific.h" },
 		{ "ModuleRelativePath", "Public/TransitionGameplayAbilitySpecific.h" },
 		{ "ObjectInitializerConstructorDeclared", "" },
+		{ "PrioritizeCategories", "Ability" },
 	};
 #endif
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UTransitionOnCanPayMana_Statics::StaticCppClassTypeInfo = {
@@ -84,9 +86,9 @@ void EmptyLinkFunctionForGeneratedCodeTransitionGameplayAbilitySpecific() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilitySpecific_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UTransitionOnCanPayMana, UTransitionOnCanPayMana::StaticClass, TEXT("UTransitionOnCanPayMana"), &Z_Registration_Info_UClass_UTransitionOnCanPayMana, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UTransitionOnCanPayMana), 711738805U) },
+		{ Z_Construct_UClass_UTransitionOnCanPayMana, UTransitionOnCanPayMana::StaticClass, TEXT("UTransitionOnCanPayMana"), &Z_Registration_Info_UClass_UTransitionOnCanPayMana, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UTransitionOnCanPayMana), 1906789347U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilitySpecific_h_381364931(TEXT("/Script/KettisLogicDriverGAS"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilitySpecific_h_2473611701(TEXT("/Script/KettisLogicDriverGAS"),
 		Z_CompiledInDeferFile_FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilitySpecific_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_Splinterra_5_3_Plugins_KettisLogicDriverExtension_Source_KettisLogicDriverGAS_Public_TransitionGameplayAbilitySpecific_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
