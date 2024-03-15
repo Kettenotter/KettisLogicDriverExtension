@@ -31,6 +31,6 @@ All of the transitions also have:
 - assigning icons from a data table
 - a toggle for inverting the condition, the icon will change color
 - a toggle which will disable event based logic (mostly for debugging)
-- the icon will turn transparent if the condition is invalid (for exmaple no gameplay tag provided
+- the icon will turn transparent if the condition is invalid (for example when no gameplay tag is set)
 
 https://github.com/Kettenotter/KettisLogicDriverExtension/assets/32515271/d92648ad-b90b-4ff3-8c26-e924643bcfaa
