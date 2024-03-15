@@ -7,6 +7,7 @@
 
 <img width="600" alt="UnrealEditor_1321" src="https://github.com/Kettenotter/KettisLogicDriverExtension/assets/32515271/76bd9ad1-930b-479f-a07a-1d462a70a140">
 
+<img width="331" alt="UnrealEditor_1322" src="https://github.com/Kettenotter/KettisLogicDriverExtension/assets/32515271/9d3c0277-3ec5-4b33-9d61-28a631042543">
 
 How it compares to the default cast to nodes and the get context:
 
