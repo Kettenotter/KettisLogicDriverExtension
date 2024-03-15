@@ -18,13 +18,19 @@ How it compares to the default cast to nodes and the get context:
 
 The nodes above for getting the ASC.
 
-Optimized transitions which work without ticking:
+Optimized transitions which work without ticking in the TransitionGameplayAbilityGeneric.h:
 
 - Gameplay Tag
 - Gameplay Tag Query
 - Attribute reach Zero
 
-A specific example which will compile out because it depends on my project specific Attribute Sets:
+A specific example which will compile out because it depends on my project specific Attribute Sets in the TransitionGameplayAbilitySpecific.h:
 - On can pay mana
+
+All of the transitions also have:
+- assigning icons from a data table
+- a toggle for inverting the condition, the icon will change color
+- a toggle which will disable event based logic (mostly for debugging)
+- the icon will turn transparent if the condition is invalid (for exmaple no gameplay tag provided
 
 https://github.com/Kettenotter/KettisLogicDriverExtension/assets/32515271/d92648ad-b90b-4ff3-8c26-e924643bcfaa
