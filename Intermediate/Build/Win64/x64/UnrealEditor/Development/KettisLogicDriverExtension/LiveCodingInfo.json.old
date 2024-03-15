@@ -2,6 +2,9 @@
 	"RemapUnityFiles": 
 	{
 		"Module.KettisLogicDriverExtension.cpp.obj": [
+			"KettisLogicDriverBPLibrary.gen.cpp.obj",
+			"KettisLogicDriverExtension.init.gen.cpp.obj",
+			"KettisLogicDriverBPLibrary.cpp.obj",
 			"KettisLogicDriverExtension.cpp.obj"
 		]
 	}

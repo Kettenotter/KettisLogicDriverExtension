@@ -1,0 +1,15 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.KettisLogicDriverGAS.cpp.obj": [
+			"KettisLogicDriverGAS.init.gen.cpp.obj",
+			"TransitionExtensionBase.gen.cpp.obj",
+			"TransitionGameplayAbilityGeneric.gen.cpp.obj",
+			"TransitionGameplayAbilitySpecific.gen.cpp.obj",
+			"KettisLogicDriverGAS.cpp.obj",
+			"TransitionGameplayAbilityGeneric.cpp.obj",
+			"TransitionExtensionBase.cpp.obj",
+			"TransitionGameplayAbilitySpecific.cpp.obj"
+		]
+	}
+}

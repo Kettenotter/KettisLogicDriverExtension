@@ -289,6 +289,12 @@
 /I "C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\UnrealEditor\Inc\KettisLogicDriverExtension\UHT"
 /I "C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Source"
 /I "C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Source\KettisLogicDriverExtension\Public"
+/I "..\Plugins\Runtime\GameplayAbilities\Intermediate\Build\Win64\UnrealEditor\Inc\GameplayAbilities\UHT"
+/I "..\Plugins\Runtime\GameplayAbilities\Source\GameplayAbilities\Public"
+/I "..\Plugins\Runtime\GameplayAbilities\Source"
+/I "..\Plugins\Runtime\DataRegistry\Intermediate\Build\Win64\UnrealEditor\Inc\DataRegistry\UHT"
+/I "..\Plugins\Runtime\DataRegistry\Source\DataRegistry\Public"
+/I "..\Plugins\Runtime\DataRegistry\Source"
 /external:W0
 /external:I "ThirdParty\mimalloc\include"
 /external:I "ThirdParty\LibTiff\Source\Win64"

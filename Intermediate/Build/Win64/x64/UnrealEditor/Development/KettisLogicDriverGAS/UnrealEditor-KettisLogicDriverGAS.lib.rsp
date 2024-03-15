@@ -1,0 +1,14 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-KettisLogicDriverGAS.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Perforce\Splinterra 5.3\Intermediate\Build\Win64\x64\SplinterraEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp17.InclOrderUnreal5_0.h.obj"
+"C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverGAS\Module.KettisLogicDriverGAS.cpp.obj"
+"C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverGAS\TransitionExtensionBase.cpp.obj"
+"C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverGAS\TransitionGameplayAbilitySpecific.cpp.obj"
+"C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverGAS\Default.rc2.res"
+/OUT:"C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverGAS\UnrealEditor-KettisLogicDriverGAS.lib"

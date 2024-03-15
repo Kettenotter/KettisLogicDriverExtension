@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "SMStateMachineInstance.h"
 #include "KettisLogicDriverBPLibrary.h"
 
+#include "AbilitySystemInterface.h"
+#include "SMStateMachineInstance.h"
 #include "GameFramework/Character.h"
 
 AActor* UKettisLogicDriverBPLibrary::GetContextAsActor(const TScriptInterface<ISMInstanceInterface> NodeInstance)
@@ -19,6 +20,19 @@ bool UKettisLogicDriverBPLibrary::GetContextAsActorChecked(const TScriptInterfac
 	Actor = Cast<AActor>(GetContextFromObject(NodeInstance.GetObject()));
 	
 	return Actor != nullptr;
+}
+
+APawn* UKettisLogicDriverBPLibrary::GetContextAsPawn(const TScriptInterface<ISMInstanceInterface> NodeInstance)
+{
+	return Cast<APawn>(GetContextFromObject(NodeInstance.GetObject()));
+}
+
+bool UKettisLogicDriverBPLibrary::GetContextAsPawnChecked(const TScriptInterface<ISMInstanceInterface> NodeInstance,
+	APawn*& Character)
+{
+	Character = Cast<APawn>(GetContextFromObject(NodeInstance.GetObject()));
+	
+	return Character != nullptr;
 }
 
 ACharacter* UKettisLogicDriverBPLibrary::GetContextAsCharacter(const TScriptInterface<ISMInstanceInterface> NodeInstance)
@@ -66,6 +80,59 @@ UObject* UKettisLogicDriverBPLibrary::GetContextFromObject(const UObject* Object
 	return SMInterface->GetContext();
 	
 	
+}
+
+bool UKettisLogicDriverBPLibrary::GetComponentFromContext(const TScriptInterface<ISMInstanceInterface> NodeInstance,
+	TSubclassOf<UActorComponent> ComponentClass, UActorComponent*& Component)
+{
+	const AActor* ActorContext = Cast<AActor>(GetContextFromObject(NodeInstance.GetObject()));
+	if (ActorContext == nullptr)
+	{
+		return false;
+	}
+	Component = ActorContext->FindComponentByClass(ComponentClass);
+
+	return Component != nullptr;
+	
+}
+
+bool UKettisLogicDriverBPLibrary::GetComponentsFromContext(const TScriptInterface<ISMInstanceInterface> NodeInstance,
+	TSubclassOf<UActorComponent> ComponentClass, TArray<UActorComponent*>& Components)
+{
+	const AActor* ActorContext = Cast<AActor>(GetContextFromObject(NodeInstance.GetObject()));
+	if (ActorContext == nullptr)
+	{
+		return false;
+	}
+	
+	ActorContext->GetComponents(ComponentClass, Components);
+
+	return !Components.IsEmpty();
+}
+
+UAbilitySystemComponent* UKettisLogicDriverBPLibrary::GetAbilitySystemComponentFromContext(
+	const TScriptInterface<ISMInstanceInterface> NodeInstance)
+{
+
+	const IAbilitySystemInterface* ASI = Cast<IAbilitySystemInterface>(NodeInstance.GetObject());
+	if (ASI)
+	{
+		return ASI->GetAbilitySystemComponent();
+	}
+	return nullptr;
+}
+
+bool UKettisLogicDriverBPLibrary::GetAbilitySystemComponentFromContextChecked(
+	const TScriptInterface<ISMInstanceInterface> NodeInstance, UAbilitySystemComponent*& Component)
+{
+
+	const IAbilitySystemInterface* ASI = Cast<IAbilitySystemInterface>(NodeInstance.GetObject());
+	if (ASI)
+	{
+		Component = ASI->GetAbilitySystemComponent();
+	}
+
+	return Component != nullptr;
 }
 
 // Modified delay action

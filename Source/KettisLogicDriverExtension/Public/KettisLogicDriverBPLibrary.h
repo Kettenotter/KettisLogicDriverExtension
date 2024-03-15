@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "AbilitySystemComponent.h"
 #include "KettisLogicDriverBPLibrary.generated.h"
 
 /**
@@ -17,28 +18,73 @@ class KETTISLOGICDRIVEREXTENSION_API UKettisLogicDriverBPLibrary : public UBluep
 	//__ Cast to Context functions __//
 
 	/*
-	 * Gets the State Machine Context and Casts it to the Actor c
+	 * Gets the State Machine Context and Casts it to the Actor class.
 	 */
-	UFUNCTION(BlueprintCallable, BlueprintPure, meta=(DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", CompactNodeTitle = "Actor"))
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Casting",
+		BlueprintPure, meta=(DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", CompactNodeTitle = "Actor"))
 	static AActor* GetContextAsActor(const TScriptInterface<ISMInstanceInterface> NodeInstance);
 	
-	UFUNCTION(BlueprintCallable, meta=(DefaultToSelf = "NodeInstance",HidePin = "NodeInstance", ExpandBoolAsExecs = "ReturnValue", CompactNodeTitle = "Actor"))
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Casting",
+		meta=(DefaultToSelf = "NodeInstance",HidePin = "NodeInstance", ExpandBoolAsExecs = "ReturnValue", CompactNodeTitle = "Actor"))
 	static bool GetContextAsActorChecked(const TScriptInterface<ISMInstanceInterface> NodeInstance, AActor*& Actor);
 
-	UFUNCTION(BlueprintCallable, BlueprintPure, meta=(DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", CompactNodeTitle = "Character"))
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Casting",
+	BlueprintPure, meta=(DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", CompactNodeTitle = "Pawn"))
+	static APawn* GetContextAsPawn(const TScriptInterface<ISMInstanceInterface> NodeInstance);
+
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Casting",
+		meta=(DefaultToSelf = "NodeInstance",HidePin = "NodeInstance", ExpandEnumAsExecs = "ReturnValue", CompactNodeTitle = "Pawn"))
+	static bool GetContextAsPawnChecked(const TScriptInterface<ISMInstanceInterface> NodeInstance, APawn*& Character);
+
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Casting",
+		BlueprintPure, meta=(DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", CompactNodeTitle = "Character"))
 	static ACharacter* GetContextAsCharacter(const TScriptInterface<ISMInstanceInterface> NodeInstance);
 
-	UFUNCTION(BlueprintCallable, meta=(DefaultToSelf = "NodeInstance",HidePin = "NodeInstance", ExpandEnumAsExecs = "ReturnValue", CompactNodeTitle = "Character"))
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Casting",
+		meta=(DefaultToSelf = "NodeInstance",HidePin = "NodeInstance", ExpandEnumAsExecs = "ReturnValue", CompactNodeTitle = "Character"))
 	static bool GetContextAsCharacterChecked(const TScriptInterface<ISMInstanceInterface> NodeInstance, ACharacter*& Character);
 
-	UFUNCTION(BlueprintCallable, BlueprintPure, meta=(DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", DeterminesOutputType="ReturnClass", DynamicOutputParam="ReturnValue", CompactNodeTitle = "Cast"))
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Casting",
+		BlueprintPure, meta=(DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", DeterminesOutputType="ReturnClass", DynamicOutputParam="ReturnValue", CompactNodeTitle = "Cast"))
 	static UObject* GetContextAsCastTo(const TScriptInterface<ISMInstanceInterface> NodeInstance, TSubclassOf<UObject> ReturnClass);
 	
-	UFUNCTION(BlueprintCallable, meta=( DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", ExpandBoolAsExecs = "ReturnValue", DeterminesOutputType="ReturnClass", DynamicOutputParam="CastContext", CompactNodeTitle = "Cast"))
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Casting",
+		meta=( DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", ExpandBoolAsExecs = "ReturnValue", DeterminesOutputType="ReturnClass", DynamicOutputParam="CastContext", CompactNodeTitle = "Cast"))
 	static bool GetContextAsCastToChecked(const TScriptInterface<ISMInstanceInterface> NodeInstance, TSubclassOf<UObject> ReturnClass, UObject*& CastContext);
 
 	static UObject* GetContextFromObject(const UObject* Object);
 
+	//__ Component __//
+
+	/** Component from CONTEXT
+	 * Finds the first component on the context actor which has the matching class.
+	 */
+	UFUNCTION(BlueprintCallable, Category= "LogicDriver|Extension|Utility" ,
+		meta=( DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", ExpandBoolAsExecs = "ReturnValue", DeterminesOutputType="ComponentClass", DynamicOutputParam="Component", CompactNodeTitle = "Comp", Keywords = "Find"))
+	static bool GetComponentFromContext(const TScriptInterface<ISMInstanceInterface> NodeInstance, TSubclassOf<UActorComponent> ComponentClass, UActorComponent*& Component);
+
+	/** Components from CONTEXT
+	 * Finds all the components on the context actor which have the matching class.
+	 */
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Utility",
+		meta=( DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", ExpandBoolAsExecs = "ReturnValue", DeterminesOutputType="ComponentClass", DynamicOutputParam="Components", CompactNodeTitle = "Comps", Keywords = "Find"))
+	static bool GetComponentsFromContext(const TScriptInterface<ISMInstanceInterface> NodeInstance, TSubclassOf<UActorComponent> ComponentClass, TArray<UActorComponent*>& Components);
+
+	//__ Ability System Component __//
+	
+	/** Ability System Component from CONTEXT.
+	 * Uses the interface.
+	 */
+	UFUNCTION(BlueprintCallable, Category= "LogicDriver|Extension|Utility" ,
+	BlueprintPure, meta=( DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", CompactNodeTitle = "ASC", Keywords = "Find, ASC"))
+	static UAbilitySystemComponent* GetAbilitySystemComponentFromContext(const TScriptInterface<ISMInstanceInterface> NodeInstance);
+	
+	/** Ability System Component from CONTEXT.
+	 * Uses the interface.
+	 */
+	UFUNCTION(BlueprintCallable, Category= "LogicDriver|Extension|Utility" ,
+		meta=( DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", ExpandBoolAsExecs = "ReturnValue", CompactNodeTitle = "ASC", Keywords = "Find, ASC"))
+	static bool GetAbilitySystemComponentFromContextChecked(const TScriptInterface<ISMInstanceInterface> NodeInstance, UAbilitySystemComponent*& Component);
 	
 	//__ Delay __//
 
@@ -49,7 +95,7 @@ class KETTISLOGICDRIVEREXTENSION_API UKettisLogicDriverBPLibrary : public UBluep
 	* Because it will abort it on the next update which happens at the end of the frame.
 	* This should never happen in State Machines which use non event based logic. And even than it should be very unlikely, still something to keep in mind.
 	*/
-	UFUNCTION(BlueprintCallable, Category="Utilities|FlowControl", meta=(Latent, DefaultToSelf = "NodeInstance", LatentInfo="LatentInfo", Duration="0.2", Keywords="sleep"))
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Utility", meta=(Latent, DefaultToSelf = "NodeInstance", LatentInfo="LatentInfo", Duration="0.2", Keywords="sleep"))
 	static void	DelayStateMachine(USMStateInstance* NodeInstance, float Duration, struct FLatentActionInfo LatentInfo);
 
 	

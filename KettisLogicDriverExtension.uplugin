@@ -19,6 +19,11 @@
 			"Name": "KettisLogicDriverExtension",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "KettisLogicDriverGAS",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [

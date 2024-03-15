@@ -2,6 +2,7 @@
 	"BuildId": "27405482",
 	"Modules": 
 	{
-		"KettisLogicDriverExtension": "UnrealEditor-KettisLogicDriverExtension.dll"
+		"KettisLogicDriverExtension": "UnrealEditor-KettisLogicDriverExtension.dll",
+		"KettisLogicDriverGAS": "UnrealEditor-KettisLogicDriverGAS.dll"
 	}
 }
