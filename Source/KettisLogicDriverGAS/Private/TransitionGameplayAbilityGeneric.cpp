@@ -32,7 +32,7 @@ void UTransitionOnGameplayTag::ClearDelegates()
 {
 	Super::ClearDelegates();
 
-	if (UAbilitySystemComponent* AbilitySystemComponent = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Cast<AActor>(GetContext()), false))
+	if (UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent())
 	{
 		AbilitySystemComponent->UnregisterGameplayTagEvent(DelegateHandle, Tag, EGameplayTagEventType::NewOrRemoved);
 		DelegateHandle.Reset();

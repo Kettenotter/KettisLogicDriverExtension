@@ -8,9 +8,7 @@
 
 AActor* UKettisLogicDriverBPLibrary::GetContextAsActor(const TScriptInterface<ISMInstanceInterface> NodeInstance)
 {
-	
 	return Cast<AActor>(GetContextFromObject(NodeInstance.GetObject()));
-	
 }
 
 
@@ -114,7 +112,7 @@ UAbilitySystemComponent* UKettisLogicDriverBPLibrary::GetAbilitySystemComponentF
 	const TScriptInterface<ISMInstanceInterface> NodeInstance)
 {
 
-	const IAbilitySystemInterface* ASI = Cast<IAbilitySystemInterface>(NodeInstance.GetObject());
+	const IAbilitySystemInterface* ASI = Cast<IAbilitySystemInterface>(GetContextFromObject(NodeInstance.GetObject()));
 	if (ASI)
 	{
 		return ASI->GetAbilitySystemComponent();
@@ -126,7 +124,7 @@ bool UKettisLogicDriverBPLibrary::GetAbilitySystemComponentFromContextChecked(
 	const TScriptInterface<ISMInstanceInterface> NodeInstance, UAbilitySystemComponent*& Component)
 {
 
-	const IAbilitySystemInterface* ASI = Cast<IAbilitySystemInterface>(NodeInstance.GetObject());
+	const IAbilitySystemInterface* ASI = Cast<IAbilitySystemInterface>(GetContextFromObject(NodeInstance.GetObject()));
 	if (ASI)
 	{
 		Component = ASI->GetAbilitySystemComponent();
