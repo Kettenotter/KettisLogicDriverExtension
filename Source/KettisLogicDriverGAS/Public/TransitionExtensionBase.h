@@ -22,10 +22,11 @@ struct FNodeIconDataTableRow : public FTableRowBase
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FVector2D IconSize = FVector2d(30, 30);
 	
+	
 };
 
 
-UCLASS()
+UCLASS(meta=(PrioritizeCategories="Ability"), AutoExpandCategories="Ability", Category = "GameplayAbility")
 class KETTISLOGICDRIVERGAS_API UTransitionExtensionBase : public USMTransitionInstance
 {
 	GENERATED_BODY()
@@ -47,9 +48,11 @@ protected:
 
 	
 	void SetEditorColor(bool Status, bool Invalid = false);
+
+	UAbilitySystemComponent* GetAbilitySystemComponent() const;
 };
 
-UCLASS(meta=(PrioritizeCategories="Ability"), AutoExpandCategories="Ability", Category = "GameplayAbility")
+UCLASS()
 class KETTISLOGICDRIVERGAS_API UTransitionExtensionDelegateBinding : public UTransitionExtensionBase
 {
 	GENERATED_BODY()
@@ -107,7 +110,7 @@ protected:
 	UFUNCTION()
 	virtual bool TestCondition();
 
-	UAbilitySystemComponent* GetAbilitySystemComponent() const;
+
 	
 	virtual bool CanEnterTransition_Implementation() const override {return bStatus;}
 	

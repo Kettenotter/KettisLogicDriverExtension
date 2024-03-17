@@ -61,6 +61,16 @@ void UTransitionExtensionBase::SetEditorColor(bool Status, bool Invalid)
 #endif
 }
 
+UAbilitySystemComponent* UTransitionExtensionBase::GetAbilitySystemComponent() const
+{
+	const IAbilitySystemInterface* ASI = Cast<IAbilitySystemInterface>(GetContext());
+	if (ASI)
+	{
+		return ASI->GetAbilitySystemComponent();
+	}
+	return nullptr;
+}
+
 UTransitionExtensionDelegateBinding::UTransitionExtensionDelegateBinding(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer), bInvertCondition(false), bDelegateWasBound(false)
 {
@@ -107,15 +117,7 @@ bool UTransitionExtensionDelegateBinding::TestCondition()
 	return false;
 }
 
-UAbilitySystemComponent* UTransitionExtensionDelegateBinding::GetAbilitySystemComponent() const
-{
-	const IAbilitySystemInterface* ASI = Cast<IAbilitySystemInterface>(GetContext());
-	if (ASI)
-	{
-		return ASI->GetAbilitySystemComponent();
-	}
-	return nullptr;
-}
+
 
 void UTransitionExtensionDelegateBinding::OnTransitionInitialized_Implementation()
 {

@@ -13,6 +13,59 @@ struct FOnAttributeChangeData;
 /**
  * 
  */
+
+UCLASS()
+class UTransitionOnGameplayEvent : public UTransitionExtensionBase
+{
+	GENERATED_BODY()
+public:
+	
+	UTransitionOnGameplayEvent(const FObjectInitializer& ObjectInitializer);
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category= "Ability")
+	FGameplayTag Tag;
+
+	/**
+	 * If OnlyMatchExact = false it will trigger for nested tags
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category= "Ability")
+	bool OnlyMatchExact = false;
+
+	FDelegateHandle MyHandle;
+
+protected:
+	virtual void ConstructionScript_Implementation() override;
+
+	virtual bool CanEnterTransition_Implementation() const override;
+	
+	virtual void OnTransitionInitialized_Implementation() override;
+	
+	virtual void OnTransitionShutdown_Implementation() override;
+
+	virtual void GameplayEventCallback(const FGameplayEventData* Payload);
+
+	virtual void GameplayEventContainerCallback(FGameplayTag MatchingTag, const FGameplayEventData* Payload);
+};
+
+UCLASS()
+class UTransitionOnGameplayEventCachedData : public UTransitionOnGameplayEvent
+{
+	GENERATED_BODY()
+	
+public:
+	/**
+	 * Stores the last Event Data Payload so it can be used by connected states.
+	 * Its quite big so its optional. Perhaps it can be improved?
+	 */
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Transient, Category="Ability")
+	FGameplayEventData EventData;
+
+
+protected:
+	virtual void GameplayEventCallback(const FGameplayEventData* Payload) override;
+	virtual void GameplayEventContainerCallback(FGameplayTag MatchingTag, const FGameplayEventData* Payload) override;
+};
+
 UCLASS()
 class KETTISLOGICDRIVERGAS_API UTransitionOnGameplayTag : public UTransitionExtensionDelegateBinding
 {

@@ -8,6 +8,102 @@
 #include "SMStateInstance.h"
 
 
+UTransitionOnGameplayEvent::UTransitionOnGameplayEvent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+{
+	SetEditorIconFromDataTable(FName("GameplayEvent"));
+	SetCanEvaluate(false);
+}
+
+void UTransitionOnGameplayEvent::ConstructionScript_Implementation()
+{
+	Super::ConstructionScript_Implementation();
+
+#if WITH_EDITOR
+	if (Tag.IsValid())
+	{
+		NodeIconTintColor = FColor::White;
+		NodeIconTintColor.A = 0.2;
+	}
+	else
+	{
+		NodeIconTintColor = FColor::White;
+		NodeIconTintColor.A = 1;
+	}
+#endif
+	
+	
+}
+
+bool UTransitionOnGameplayEvent::CanEnterTransition_Implementation() const
+{
+	return Super::CanEnterTransition_Implementation();
+}
+
+void UTransitionOnGameplayEvent::OnTransitionInitialized_Implementation()
+{
+	Super::OnTransitionInitialized_Implementation();
+
+	if (MyHandle.IsValid())
+	{
+		return;
+	}
+	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
+	if (ASC)
+	{
+		if (OnlyMatchExact)
+		{
+			MyHandle = ASC->GenericGameplayEventCallbacks.FindOrAdd(Tag).AddUObject(this, &UTransitionOnGameplayEvent::GameplayEventCallback);
+		}
+		else
+		{
+			MyHandle = ASC->AddGameplayEventTagContainerDelegate(FGameplayTagContainer(Tag), FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(this, &UTransitionOnGameplayEvent::GameplayEventContainerCallback));
+		}
+	}
+}
+
+void UTransitionOnGameplayEvent::OnTransitionShutdown_Implementation()
+{
+	Super::OnTransitionShutdown_Implementation();
+
+	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
+	if (ASC && MyHandle.IsValid())
+	{
+		if (OnlyMatchExact)
+		{
+			ASC->GenericGameplayEventCallbacks.FindOrAdd(Tag).Remove(MyHandle);
+		}
+		else
+		{
+			ASC->RemoveGameplayEventTagContainerDelegate(FGameplayTagContainer(Tag), MyHandle);
+		}
+
+	}
+}
+
+void UTransitionOnGameplayEvent::GameplayEventCallback(const FGameplayEventData* Payload)
+{
+	EvaluateFromManuallyBoundEvent();
+}
+
+void UTransitionOnGameplayEvent::GameplayEventContainerCallback(FGameplayTag MatchingTag,
+	const FGameplayEventData* Payload)
+{
+	EvaluateFromManuallyBoundEvent();
+}
+
+void UTransitionOnGameplayEventCachedData::GameplayEventCallback(const FGameplayEventData* Payload)
+{
+	EventData = *Payload;
+	Super::GameplayEventCallback(Payload);
+}
+
+void UTransitionOnGameplayEventCachedData::GameplayEventContainerCallback(FGameplayTag MatchingTag,
+	const FGameplayEventData* Payload)
+{
+	EventData = *Payload;
+	Super::GameplayEventContainerCallback(MatchingTag, Payload);
+}
+
 UTransitionOnGameplayTag::UTransitionOnGameplayTag(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
@@ -21,7 +117,7 @@ void UTransitionOnGameplayTag::BindDelegates()
 	Super::BindDelegates();
 	
 	
-	if (UAbilitySystemComponent* AbilitySystemComponent = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Cast<AActor>(GetContext()), false))
+	if (UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent())
 	{
 		DelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &UTransitionOnGameplayTag::TagChanged);
 		

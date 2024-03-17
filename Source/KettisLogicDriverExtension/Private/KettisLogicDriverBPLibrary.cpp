@@ -17,7 +17,7 @@ bool UKettisLogicDriverBPLibrary::GetContextAsActorChecked(const TScriptInterfac
 
 	Actor = Cast<AActor>(GetContextFromObject(NodeInstance.GetObject()));
 	
-	return Actor != nullptr;
+	return IsValid(Actor);
 }
 
 APawn* UKettisLogicDriverBPLibrary::GetContextAsPawn(const TScriptInterface<ISMInstanceInterface> NodeInstance)
@@ -30,7 +30,7 @@ bool UKettisLogicDriverBPLibrary::GetContextAsPawnChecked(const TScriptInterface
 {
 	Character = Cast<APawn>(GetContextFromObject(NodeInstance.GetObject()));
 	
-	return Character != nullptr;
+	return IsValid(Character);
 }
 
 ACharacter* UKettisLogicDriverBPLibrary::GetContextAsCharacter(const TScriptInterface<ISMInstanceInterface> NodeInstance)
@@ -42,7 +42,7 @@ bool UKettisLogicDriverBPLibrary::GetContextAsCharacterChecked(const TScriptInte
 {
 	Character = Cast<ACharacter>(GetContextFromObject(NodeInstance.GetObject()));
 	
-	return Character != nullptr;
+	return IsValid(Character);
 	
 }
 
@@ -62,7 +62,7 @@ bool UKettisLogicDriverBPLibrary::GetContextAsCastToChecked(const TScriptInterfa
 {
 	CastContext = GetContextFromObject(NodeInstance.GetObject())->IsA(ReturnClass) ? GetContextFromObject(NodeInstance.GetObject()) : nullptr;
 	
-	return CastContext != nullptr;
+	return IsValid(CastContext);
 }
 
 UObject* UKettisLogicDriverBPLibrary::GetContextFromObject(const UObject* Object)
@@ -90,7 +90,7 @@ bool UKettisLogicDriverBPLibrary::GetComponentFromContext(const TScriptInterface
 	}
 	Component = ActorContext->FindComponentByClass(ComponentClass);
 
-	return Component != nullptr;
+	return IsValid(Component);
 	
 }
 
@@ -130,7 +130,7 @@ bool UKettisLogicDriverBPLibrary::GetAbilitySystemComponentFromContextChecked(
 		Component = ASI->GetAbilitySystemComponent();
 	}
 
-	return Component != nullptr;
+	return IsValid(Component);
 }
 
 // Modified delay action

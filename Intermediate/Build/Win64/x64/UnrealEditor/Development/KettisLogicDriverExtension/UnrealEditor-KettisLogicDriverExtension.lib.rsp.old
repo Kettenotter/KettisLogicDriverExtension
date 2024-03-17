@@ -8,5 +8,6 @@
 /NODEFAULTLIB
 "C:\Perforce\Splinterra 5.3\Intermediate\Build\Win64\x64\SplinterraEditor\Development\Engine\SharedPCH.Engine.Cpp17.InclOrderUnreal5_0.h.obj"
 "C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverExtension\Module.KettisLogicDriverExtension.cpp.obj"
+"C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverExtension\KettisLogicDriverBPLibrary.cpp.obj"
 "C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverExtension\Default.rc2.res"
 /OUT:"C:\Perforce\Splinterra 5.3\Plugins\KettisLogicDriverExtension\Intermediate\Build\Win64\x64\UnrealEditor\Development\KettisLogicDriverExtension\UnrealEditor-KettisLogicDriverExtension.lib"
