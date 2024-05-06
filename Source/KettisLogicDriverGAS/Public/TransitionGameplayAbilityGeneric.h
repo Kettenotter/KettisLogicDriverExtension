@@ -55,11 +55,15 @@ class UTransitionOnGameplayEventCachedData : public UTransitionOnGameplayEvent
 public:
 	/**
 	 * Stores the last Event Data Payload so it can be used by connected states.
-	 * Its quite big so its optional. Perhaps it can be improved?
+	 * Its quite big so its optional.
+	 *
+	 * TODO: Make sure the pointers inside TOptional are not wonky donky.
 	 */
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Transient, Category="Ability")
-	FGameplayEventData EventData;
+	
+	TOptional<FGameplayEventData> CachedEventData;
 
+	UFUNCTION(BlueprintCallable)
+	bool GetLastGameplayEventData(FGameplayEventData& EventData);
 
 protected:
 	virtual void GameplayEventCallback(const FGameplayEventData* Payload) override;

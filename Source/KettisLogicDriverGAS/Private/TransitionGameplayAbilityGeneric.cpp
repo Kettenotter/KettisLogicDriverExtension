@@ -36,7 +36,7 @@ void UTransitionOnGameplayEvent::ConstructionScript_Implementation()
 
 bool UTransitionOnGameplayEvent::CanEnterTransition_Implementation() const
 {
-	return Super::CanEnterTransition_Implementation();
+	return true;
 }
 
 void UTransitionOnGameplayEvent::OnTransitionInitialized_Implementation()
@@ -76,6 +76,7 @@ void UTransitionOnGameplayEvent::OnTransitionShutdown_Implementation()
 		{
 			ASC->RemoveGameplayEventTagContainerDelegate(FGameplayTagContainer(Tag), MyHandle);
 		}
+		MyHandle.Reset();
 
 	}
 }
@@ -91,16 +92,27 @@ void UTransitionOnGameplayEvent::GameplayEventContainerCallback(FGameplayTag Mat
 	EvaluateFromManuallyBoundEvent();
 }
 
+bool UTransitionOnGameplayEventCachedData::GetLastGameplayEventData(FGameplayEventData& EventData)
+{
+	if (CachedEventData.IsSet())
+	{
+		EventData = CachedEventData.GetValue();
+		return true;
+	}
+	return false;
+	
+}
+
 void UTransitionOnGameplayEventCachedData::GameplayEventCallback(const FGameplayEventData* Payload)
 {
-	EventData = *Payload;
+	CachedEventData = *Payload;
 	Super::GameplayEventCallback(Payload);
 }
 
 void UTransitionOnGameplayEventCachedData::GameplayEventContainerCallback(FGameplayTag MatchingTag,
 	const FGameplayEventData* Payload)
 {
-	EventData = *Payload;
+	CachedEventData = *Payload;
 	Super::GameplayEventContainerCallback(MatchingTag, Payload);
 }
 
