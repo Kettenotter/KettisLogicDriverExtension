@@ -1,0 +1,250 @@
+﻿// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "Transitions/TransitionOnGameplayEffect.h"
+
+#include "GasSmCacheSubsystem.h"
+#include "ISMEditorGraphNodeInterface.h"
+#include "SMNode_Base.h"
+#include "SMStateInstance.h"
+#include "SMUtils.h"
+#include "TransitionFilter/ExtraFilterOptions.h"
+
+
+UTransitionOnGameplayEffect::UTransitionOnGameplayEffect(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
+{
+	SetCanEvaluate(false);
+
+	if (Cast<UTransitionOnGameplayEffect>(ObjectInitializer.GetArchetype()))
+	{
+		EffectTransitionData = Cast<UTransitionOnGameplayEffect>(ObjectInitializer.GetArchetype())->EffectTransitionData;
+	}
+	if (Cast<UTransitionOnGameplayEffect>(GetDefault<UTransitionOnGameplayEffect>(ObjectInitializer.GetClass())))
+	{
+		EffectTransitionData = Cast<UTransitionOnGameplayEffect>(GetDefault<UTransitionOnGameplayEffect>(ObjectInitializer.GetClass()))->EffectTransitionData;
+	}
+}
+
+void UTransitionOnGameplayEffect::OnRootStateMachineStart_Implementation()
+{
+	Super::OnRootStateMachineStart_Implementation();
+
+	//Frees the memory.
+	EffectTransitionData.Reset();
+}
+
+FTransitionOnGameplayEffectSparseData UTransitionOnGameplayEffect::GetOptionalData(FTransitionOnGameplayEffectSparseData& MyData, bool& bIsSet, bool& bIsSetTemplate)
+{
+	
+	bIsSet = EffectTransitionData.IsSet();
+	MyData = EffectTransitionData.Get(FTransitionOnGameplayEffectSparseData());
+	bIsSetTemplate = false;
+
+
+	if (UTransitionOnGameplayEffect* Template =	UTransitionExtensionBase::GetTemplateAs<UTransitionOnGameplayEffect>())
+	{
+
+		if (Template->EffectTransitionData.IsSet())
+		{
+			bIsSetTemplate = true;
+			return Template->EffectTransitionData.GetValue();
+		}
+			
+	}
+	return FTransitionOnGameplayEffectSparseData();
+}
+
+void UTransitionOnGameplayEffect::ConstructionScript_Implementation()
+{
+	Super::ConstructionScript_Implementation();
+
+	
+#if WITH_EDITOR
+
+	if (!IsEditorExecution())
+	{
+		return;
+	}
+
+	if (!EffectTransitionData.IsSet())
+	{
+		EffectTransitionData = FTransitionOnGameplayEffectSparseData();
+	}
+	
+	SetEditorIconFromDataTable(FName("Effect"));
+	
+	if (!EffectTransitionData.IsSet() || (EffectTransitionData->EffectTagFilter.IsEmpty() && !EffectTransitionData->EffectClassFilter))
+	{
+		NodeIconTintColor = FColor::White;
+		NodeIconTintColor.A = 0.2;
+	}
+	else
+	{
+		NodeIconTintColor = FColor::White;
+		NodeIconTintColor.A = 1;
+	}
+
+	FString DisplayName = TEXT("Effect");
+	if (EffectTransitionData)
+	{
+		if (EffectTransitionData->EffectTag.IsValid())
+		{
+			DisplayName += " <Tag> ";
+			DisplayName += EffectTransitionData->EffectTag.ToString() + " ";
+		}
+		
+		if (!EffectTransitionData->EffectTagFilter.IsEmpty())
+		{
+			DisplayName += " <Query> " + EffectTransitionData->EffectTagFilter.GetDescription() + " ";
+		}
+		
+
+		if (EffectTransitionData->EffectClassFilter)
+		{
+			DisplayName += " <Class> " + EffectTransitionData->EffectClassFilter->GetName() + " ";
+
+		}
+	}
+	SetTransitionName(DisplayName);
+#endif
+
+}
+
+void UTransitionOnGameplayEffect::OnTransitionInitialized_Implementation()
+{
+	Super::OnTransitionInitialized_Implementation();
+
+	if (UAbilitySystemComponent* ASC = GetAbilitySystemComponent())
+	{
+		/*OnApplyGameplayEffectCallbackDelegateHandle =*/
+		if (Target == EEffectTransitionType::AppliedToSelf)
+		{
+			ASC->OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UTransitionOnGameplayEffect::OnApplyGameplayEffectCallback);
+
+		}
+		else if (Target == EEffectTransitionType::AppliedFromSelf)
+		{
+			ASC->OnGameplayEffectAppliedDelegateToTarget.AddUObject(this, &UTransitionOnGameplayEffect::OnApplyGameplayEffectCallback);
+		}
+	}
+}
+
+void UTransitionOnGameplayEffect::OnTransitionShutdown_Implementation()
+{
+	Super::OnTransitionShutdown_Implementation();
+
+	/*if (!OnApplyGameplayEffectCallbackDelegateHandle.IsValid())
+	{
+		return;
+	}*/
+	
+	if (UAbilitySystemComponent* ASC = GetAbilitySystemComponent())
+	{
+		ASC->OnGameplayEffectAppliedDelegateToSelf.RemoveAll(this);
+	}
+	
+}
+
+
+void UTransitionOnGameplayEffect::OnApplyGameplayEffectCallback(UAbilitySystemComponent* inTarget,
+                                                                const FGameplayEffectSpec& SpecApplied, FActiveGameplayEffectHandle ActiveHandle)
+{
+	UTransitionOnGameplayEffect* Template =	GetTemplateAs<class UTransitionOnGameplayEffect>();
+
+	if (!Template || !Template->EffectTransitionData.IsSet())
+	{
+		return;
+	}
+
+	const FTransitionOnGameplayEffectSparseData& Data = *Template->EffectTransitionData;
+
+	if (Data.EffectTag.IsValid() && !SpecApplied.Def->GetAssetTags().HasTag(Data.EffectTag))
+	{
+		return;
+	}
+	if (!Data.EffectTagFilter.IsEmpty() && !Data.EffectTagFilter.Matches(SpecApplied.Def->GetAssetTags()))
+	{
+		return;
+	}
+
+	if (!Data.SourceTagFilter.IsEmpty() && !Data.SourceTagFilter.Matches(SpecApplied.CapturedSourceTags.GetActorTags()))
+	{
+		return;
+	}
+
+	if (!Data.TargetTagFilter.IsEmpty() && !Data.TargetTagFilter.Matches(SpecApplied.CapturedTargetTags.GetActorTags()))
+	{
+		return;
+	}
+	
+	if (Data.EffectClassFilter)
+	{
+		if (SpecApplied.Def && !SpecApplied.Def.IsA(Template->EffectTransitionData->EffectClassFilter))
+		{
+			return;
+		}
+	}
+
+	for (auto& ExtraFilter : Data.FilterOptions)
+	{
+		if (!ExtraFilter.IsValid())
+		{
+			continue;
+		}
+
+		if (const FFilterOptionsActorTestBase* ActorTest = ExtraFilter.GetPtr<FFilterOptionsActorTestBase>())
+		{
+			if (!ActorTest->TestActors(Cast<AActor>(GetContext()), SpecApplied.GetContext().GetInstigator()))
+			{
+				return;
+			}
+		}
+	}
+	
+	AActor* AvatarActor = inTarget ? inTarget->GetAvatarActor_Direct() : nullptr;
+	
+
+
+	FGameplayEffectSpecHandle SpecHandle(new FGameplayEffectSpec(SpecApplied));
+
+	
+	FCachedEffectApplication CachedData;
+	CachedData.SourceActor = AvatarActor;
+	CachedData.SpecHandle = SpecHandle;
+	CachedData.ActiveHandle = ActiveHandle;
+	
+	GetWorld()->GetSubsystem<UGasSmCacheSubsystem>()->StoreEffectData(Cast<USMStateInstance>(GetNextStateInstance()), CachedData);
+
+	SetToTrueAndEvaluate();
+}
+
+void UTransitionOnGameplayEffect::Serialize(FArchive& Ar)
+{
+	//Clear out defaults to save memory.
+	if (Ar.IsCooking())
+	{
+		if (EffectTransitionData.IsSet() && EffectTransitionData == FTransitionOnGameplayEffectSparseData())
+		{
+			EffectTransitionData.Reset();
+		}
+	}
+	Super::Serialize(Ar);
+
+	return;
+
+
+	RETURN_IF_LOADING_VERSION_LOWER(1)
+	Ar.SerializeBits(&Target, 4);
+	//Ar << Target;
+	//EffectTransitionData.Serialize(Ar);
+	
+}
+
+
+/*
+const FTransitionOnGameplayEffectSparseData& UTransitionOnGameplayEffect::GetSparseClassData()
+{
+	return  *static_cast<const FTransitionOnGameplayEffectSparseData*>(GetClass()->GetSparseClassData(EGetSparseClassDataMethod::ArchetypeIfNull));
+	
+}
+*/

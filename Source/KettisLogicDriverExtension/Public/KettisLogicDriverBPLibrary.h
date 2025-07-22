@@ -70,6 +70,15 @@ class KETTISLOGICDRIVEREXTENSION_API UKettisLogicDriverBPLibrary : public UBluep
 		meta=( DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", ExpandBoolAsExecs = "ReturnValue", DeterminesOutputType="ComponentClass", DynamicOutputParam="Components", CompactNodeTitle = "Comps", Keywords = "Find"))
 	static bool GetComponentsFromContext(const TScriptInterface<ISMInstanceInterface> NodeInstance, TSubclassOf<UActorComponent> ComponentClass, TArray<UActorComponent*>& Components);
 
+	
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Casting",
+	BlueprintPure, meta=(DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", CompactNodeTitle = "PrimRoot"))
+	static UPrimitiveComponent* GetContextRootAsPrimitive(const TScriptInterface<ISMInstanceInterface> NodeInstance);
+
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Casting",
+	meta=(DefaultToSelf = "NodeInstance",HidePin = "NodeInstance", ExpandBoolAsExecs = "ReturnValue", CompactNodeTitle = "PrimRoot"))
+	static bool GetContextRootAsPrimitiveChecked(const TScriptInterface<ISMInstanceInterface> NodeInstance, UPrimitiveComponent*& PrimitiveComp);
+	
 	//__ Ability System Component __//
 	
 	/** Ability System Component from CONTEXT.
@@ -85,8 +94,18 @@ class KETTISLOGICDRIVEREXTENSION_API UKettisLogicDriverBPLibrary : public UBluep
 	UFUNCTION(BlueprintCallable, Category= "LogicDriver|Extension|Utility" ,
 		meta=( DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", ExpandBoolAsExecs = "ReturnValue", CompactNodeTitle = "ASC", Keywords = "Find, ASC"))
 	static bool GetAbilitySystemComponentFromContextChecked(const TScriptInterface<ISMInstanceInterface> NodeInstance, UAbilitySystemComponent*& Component);
+
+	/** Use this in the case if your context is not the avatar actor.
+	 * For example if you run the state machine on your controller and have it as the context. (The Context still needs to Implement the GAS interface)
+	 * But in most cases I would recommend to set your Context to the Avatar Actor.
+	 */
+	UFUNCTION(BlueprintCallable, Category= "LogicDriver|Extension|Utility" ,
+	BlueprintPure, meta=( DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", CompactNodeTitle = "Avatar", Keywords = "Find, ASC"))
+	static AActor* GetAvatarActorFromContext(const TScriptInterface<ISMInstanceInterface> NodeInstance);
+
 	
-	//__ Delay __//
+	
+	//__ UTILITY __//
 
 	/**
 	* A delay which will stop itself it the state is not active.
@@ -98,6 +117,16 @@ class KETTISLOGICDRIVEREXTENSION_API UKettisLogicDriverBPLibrary : public UBluep
 	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Utility", meta=(Latent, DefaultToSelf = "NodeInstance", LatentInfo="LatentInfo", Duration="0.2", Keywords="sleep"))
 	static void	DelayStateMachine(USMStateInstance* NodeInstance, float Duration, struct FLatentActionInfo LatentInfo);
 
+	/**
+	* Checks if the State is Active or no
+	*/
+	UFUNCTION(BlueprintCallable, Category= "LogicDriver|Extension|Utility", meta=(DefaultToSelf = "NodeInstance", ExpandBoolAsExecs = "ReturnValue"))
+	static bool	SwitchOnActive(USMStateInstance* NodeInstance);
 	
+	//__ Editor __//
 
+	UFUNCTION(BlueprintCallable, Category= "LogicDriver|Extension|Editor", meta=(DevelopmentOnly))
+	static UObject* SpawnAndRegisterTab(class UUserWidgetBlueprint* Widget);
+	
+	
 };

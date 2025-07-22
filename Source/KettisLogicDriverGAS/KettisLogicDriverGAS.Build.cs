@@ -10,7 +10,12 @@ public class KettisLogicDriverGAS : ModuleRules
         PublicDependencyModuleNames.AddRange(
             new string[]
             {
-                "Core",
+                "Core", 
+                "SMSystem", 
+                "SMExtendedRuntime",
+                "GameplayAbilities",
+                "GameplayTags",
+                "StructUtils"
             }
         );
 
@@ -24,7 +29,8 @@ public class KettisLogicDriverGAS : ModuleRules
                 "SMSystem",
                 "GameplayAbilities",
                 "GameplayTags",
-                "AbilitySMEntity",
+                "AbilitySM_GAS",
+                "AbilitySMEntity"
             }
         );
 
@@ -44,6 +50,8 @@ public class KettisLogicDriverGAS : ModuleRules
         }
 
         PublicDefinitions.Add("WITH_KETTENOTTER_SPECIFIC=" + (bIncludeKettenotterSpecific ? "1" : "0"));
+        
+        PublicDefinitions.Add("LOGIC_DRIVER_GAS_CUSTOM_SERIALIZE=0");
 
 
 

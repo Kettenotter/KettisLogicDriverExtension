@@ -1,10 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+
 #include "KettisLogicDriverBPLibrary.h"
 
 #include "AbilitySystemInterface.h"
+
+
 #include "SMStateMachineInstance.h"
+
 #include "GameFramework/Character.h"
+#include "Blueprint/UserWidgetBlueprint.h"
+
+
+
 
 AActor* UKettisLogicDriverBPLibrary::GetContextAsActor(const TScriptInterface<ISMInstanceInterface> NodeInstance)
 {
@@ -108,6 +116,31 @@ bool UKettisLogicDriverBPLibrary::GetComponentsFromContext(const TScriptInterfac
 	return !Components.IsEmpty();
 }
 
+UPrimitiveComponent* UKettisLogicDriverBPLibrary::GetContextRootAsPrimitive(
+	const TScriptInterface<ISMInstanceInterface> NodeInstance)
+{
+	const AActor* ActorContext = Cast<AActor>(GetContextFromObject(NodeInstance.GetObject()));
+	if (ActorContext == nullptr)
+	{
+		return nullptr;
+	}
+
+	if (UPrimitiveComponent* Prim = Cast<UPrimitiveComponent>(ActorContext->GetRootComponent()))
+	{
+		return Prim;
+	}
+
+	return nullptr;
+}
+
+bool UKettisLogicDriverBPLibrary::GetContextRootAsPrimitiveChecked(
+	const TScriptInterface<ISMInstanceInterface> NodeInstance, UPrimitiveComponent*& PrimitiveComp)
+{
+	PrimitiveComp =	GetContextRootAsPrimitive(NodeInstance);
+
+	return IsValid(PrimitiveComp);
+}
+
 UAbilitySystemComponent* UKettisLogicDriverBPLibrary::GetAbilitySystemComponentFromContext(
 	const TScriptInterface<ISMInstanceInterface> NodeInstance)
 {
@@ -131,6 +164,17 @@ bool UKettisLogicDriverBPLibrary::GetAbilitySystemComponentFromContextChecked(
 	}
 
 	return IsValid(Component);
+}
+
+AActor* UKettisLogicDriverBPLibrary::GetAvatarActorFromContext(
+	const TScriptInterface<ISMInstanceInterface> NodeInstance)
+{
+	const IAbilitySystemInterface* ASI = Cast<IAbilitySystemInterface>(GetContextFromObject(NodeInstance.GetObject()));
+	if (ASI)
+	{
+		return ASI->GetAbilitySystemComponent()->GetAvatarActor();
+	}
+	return nullptr;
 }
 
 // Modified delay action
@@ -197,4 +241,38 @@ void UKettisLogicDriverBPLibrary::DelayStateMachine(USMStateInstance* NodeInstan
 	}
 	
 }
+
+bool UKettisLogicDriverBPLibrary::SwitchOnActive(USMStateInstance* NodeInstance)
+{
+	if (!NodeInstance)
+	{
+		return false;
+	}
+	return 	NodeInstance->IsActive();
+}
+
+#if WITH_EDITOR
+#include "EditorUtilitySubsystem.h"
+#include "Editor.h"
+#include "Editor/EditorEngine.h"
+#include "EditorUtilityWidgetBlueprint.h"
+#include "Blueprint/UserWidget.h"
+
+#endif
+
+class UEditorUtilitySubsystem;
+
+UObject* UKettisLogicDriverBPLibrary::SpawnAndRegisterTab(class UUserWidgetBlueprint* Widget)
+{
+	#if WITH_EDITOR
+	if (Cast<UEditorUtilityWidgetBlueprint>(Widget) && GEditor)
+	{
+		return GEditor->GetEditorSubsystem<UEditorUtilitySubsystem>()->SpawnAndRegisterTab(Cast<UEditorUtilityWidgetBlueprint>(Widget));
+	}
+	
+
+	#endif
+	return nullptr;
+}
+
 

@@ -27,6 +27,7 @@ public class KettisLogicDriverExtension : ModuleRules
 			{
 				"Core", 
 				"GameplayAbilities",
+				"Niagara"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -40,9 +41,15 @@ public class KettisLogicDriverExtension : ModuleRules
 				"Slate",
 				"SlateCore", 
 				"SMSystem",
+				"UMG", 
+
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
+		if (Target.Type == TargetType.Editor)
+		{
+			PrivateDependencyModuleNames.AddRange(new string[] { "UnrealEd" ,"Blutility", "UMGEditor"});
+		}
 		
 		
 		DynamicallyLoadedModuleNames.AddRange(

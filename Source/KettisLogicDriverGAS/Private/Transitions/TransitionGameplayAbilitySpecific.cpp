@@ -1,7 +1,7 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "..\Public\TransitionGameplayAbilitySpecific.h"
+#include "Transitions/TransitionGameplayAbilitySpecific.h"
 
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
@@ -24,8 +24,8 @@ UTransitionOnCanPayMana::UTransitionOnCanPayMana(const FObjectInitializer& Objec
 
 #if WITH_KETTENOTTER_SPECIFIC
 
-#include "AsmAttributeSetCore.h"
-#include "AsmAttributeSetCreature.h"
+#include "AttributeSets/AsmAttributeSetCreature.h"
+#include "AttributeSets/AsmAttributeSetCore.h"
 
 void UTransitionOnCanPayMana::BindDelegates()
 {
