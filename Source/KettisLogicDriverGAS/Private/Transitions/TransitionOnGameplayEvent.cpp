@@ -138,8 +138,6 @@ void UTransitionOnGameplayEvent::Serialize(FArchive& Ar)
 	Super::Serialize(Ar);
 
 	RETURN_IF_LOADING_VERSION_LOWER(1)
-
-	return;
 	
 	Ar << Tag;
 	FArchive_Serialize_BitfieldBool(Ar, bOnlyMatchExact);

@@ -229,10 +229,7 @@ void UTransitionOnGameplayEffect::Serialize(FArchive& Ar)
 		}
 	}
 	Super::Serialize(Ar);
-
-	return;
-
-
+	
 	RETURN_IF_LOADING_VERSION_LOWER(1)
 	Ar.SerializeBits(&Target, 4);
 	//Ar << Target;

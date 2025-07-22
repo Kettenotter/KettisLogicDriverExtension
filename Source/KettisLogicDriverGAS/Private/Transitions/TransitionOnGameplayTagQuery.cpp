@@ -150,7 +150,7 @@ void UTransitionOnGameplayTagQuery::UpdateTargetTags(const FGameplayTag Tag, int
 void UTransitionOnGameplayTagQuery::Serialize(FArchive& Ar)
 {
 	Super::Serialize(Ar);
-	//RETURN_IF_LOADING_VERSION_LOWER(1)
-
+	
+	RETURN_IF_LOADING_VERSION_LOWER(1)
 	TagQuery.Serialize(Ar);
 }
