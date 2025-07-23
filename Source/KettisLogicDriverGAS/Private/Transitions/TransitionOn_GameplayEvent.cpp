@@ -1,15 +1,15 @@
 
-#include "Transitions/TransitionOnGameplayEvent.h"
+#include "Transitions/TransitionOn_GameplayEvent.h"
 
 #include "GasSmCacheSubsystem.h"
 
-UTransitionOnGameplayEvent::UTransitionOnGameplayEvent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+UTransitionOn_GameplayEvent::UTransitionOn_GameplayEvent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	SetEditorIconFromDataTable(FName("GameplayEvent"));
 	SetCanEvaluate(false);
 }
 
-void UTransitionOnGameplayEvent::ConstructionScript_Implementation()
+void UTransitionOn_GameplayEvent::ConstructionScript_Implementation()
 {
 	Super::ConstructionScript_Implementation();
 
@@ -39,7 +39,7 @@ void UTransitionOnGameplayEvent::ConstructionScript_Implementation()
 	
 }
 
-void UTransitionOnGameplayEvent::OnTransitionInitialized_Implementation()
+void UTransitionOn_GameplayEvent::OnTransitionInitialized_Implementation()
 {
 	Super::OnTransitionInitialized_Implementation();
 
@@ -51,16 +51,30 @@ void UTransitionOnGameplayEvent::OnTransitionInitialized_Implementation()
 	{
 		if (bOnlyMatchExact)
 		{
-			GameplayEventHandle = ASC->GenericGameplayEventCallbacks.FindOrAdd(Tag).AddUObject(this, &UTransitionOnGameplayEvent::GameplayEventCallback);
+			GameplayEventHandle = ASC->GenericGameplayEventCallbacks.FindOrAdd(Tag).AddUObject(this, &UTransitionOn_GameplayEvent::GameplayEventCallback);
 		}
 		else
 		{
-			GameplayEventHandle = ASC->AddGameplayEventTagContainerDelegate(FGameplayTagContainer(Tag), FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(this, &UTransitionOnGameplayEvent::GameplayEventContainerCallback));
+			GameplayEventHandle = ASC->AddGameplayEventTagContainerDelegate(FGameplayTagContainer(Tag), FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(this, &UTransitionOn_GameplayEvent::GameplayEventContainerCallback));
 		}
+	}
+	else if (FVirtualTagData* Data = UGasSmCacheSubsystem::GetVirtualTagData(GetContext(), true))
+	{
+		if (bOnlyMatchExact)
+		{
+			GameplayEventHandle = Data->GenericGameplayEventCallbacks.FindOrAdd(Tag).AddUObject(this, &UTransitionOn_GameplayEvent::GameplayEventCallback);
+
+		}
+		else
+		{
+			GameplayEventHandle = Data->AddGameplayEventTagContainerDelegate(FGameplayTagContainer(Tag), FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(this, &UTransitionOn_GameplayEvent::GameplayEventContainerCallback));
+
+		}
+		
 	}
 }
 
-void UTransitionOnGameplayEvent::OnTransitionShutdown_Implementation()
+void UTransitionOn_GameplayEvent::OnTransitionShutdown_Implementation()
 {
 	Super::OnTransitionShutdown_Implementation();
 
@@ -80,9 +94,24 @@ void UTransitionOnGameplayEvent::OnTransitionShutdown_Implementation()
 		GameplayEventHandle.Reset();
 
 	}
+	else if (FVirtualTagData* Data = UGasSmCacheSubsystem::GetVirtualTagData(GetContext(), true))
+	{
+		if (bOnlyMatchExact)
+		{
+			Data->GenericGameplayEventCallbacks.FindOrAdd(Tag).Remove(GameplayEventHandle);
+
+		}
+		else
+		{
+			Data->RemoveGameplayEventTagContainerDelegate(FGameplayTagContainer(Tag), GameplayEventHandle);
+
+		}
+		GameplayEventHandle.Reset();
+		
+	}
 }
 
-void UTransitionOnGameplayEvent::GameplayEventCallback(const FGameplayEventData* Payload)
+void UTransitionOn_GameplayEvent::GameplayEventCallback(const FGameplayEventData* Payload)
 {
 	if (bRemainTrueUntilExit)
 	{
@@ -93,8 +122,7 @@ void UTransitionOnGameplayEvent::GameplayEventCallback(const FGameplayEventData*
  	CacheSub->StoreEventData(GetNextStateInstance(), Payload);
 	if (SetToTrueAndEvaluate())
 	{
-		CacheSub->bCacheTransitionWasTaken = true;
-		CacheSub->LastTransitionTaken = this;
+		CacheSub->TryWriteLastTransition(this);
 	}
 	else
 	{
@@ -102,13 +130,13 @@ void UTransitionOnGameplayEvent::GameplayEventCallback(const FGameplayEventData*
 	}
 }
 
-void UTransitionOnGameplayEvent::GameplayEventContainerCallback(FGameplayTag MatchingTag,
+void UTransitionOn_GameplayEvent::GameplayEventContainerCallback(FGameplayTag MatchingTag,
 	const FGameplayEventData* Payload)
 {
 	GameplayEventCallback(Payload);
 }
 
-void UTransitionOnGameplayEvent::SimulateEventCallback(FGameplayTag EventTag, const FGameplayEventData* Payload)
+void UTransitionOn_GameplayEvent::SimulateEventCallback(FGameplayTag EventTag, const FGameplayEventData* Payload)
 {
 	if (bOnlyMatchExact)
 	{
@@ -133,7 +161,7 @@ void UTransitionOnGameplayEvent::SimulateEventCallback(FGameplayTag EventTag, co
 	}
 }
 
-void UTransitionOnGameplayEvent::Serialize(FArchive& Ar)
+void UTransitionOn_GameplayEvent::Serialize(FArchive& Ar)
 {
 	Super::Serialize(Ar);
 

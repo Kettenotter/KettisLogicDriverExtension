@@ -8,22 +8,23 @@
 #include "TransitionExtensionBase.h"
 #include "Nodes/Transitions/SMTransitionInstance.h"
 
-#include "TransitionOnGameplayEvent.generated.h"
+#include "TransitionOn_GameplayEvent.generated.h"
 
 
 struct FOnAttributeChangeData;
 
 /**
  * Takes the transitions when the Gameplay event is received.
+ * Works with and without an ASC. -> Send Gameplay Event to Actor State Machine
  */
 
 UCLASS()
-class UTransitionOnGameplayEvent : public UTransitionExtensionBase
+class UTransitionOn_GameplayEvent : public UTransitionExtensionBase
 {
 	GENERATED_BODY()
 public:
 	
-	UTransitionOnGameplayEvent(const FObjectInitializer& ObjectInitializer);
+	UTransitionOn_GameplayEvent(const FObjectInitializer& ObjectInitializer);
 
 	/**
 	 * The tag event tag which triggers the transition.
@@ -76,7 +77,7 @@ public:
  * 
  */
 UCLASS(meta=(DeprecatedNode))
-class UTransitionOnGameplayEventCachedData : public UTransitionOnGameplayEvent
+class UTransitionOnGameplayEventCachedData : public UTransitionOn_GameplayEvent
 {
 	GENERATED_BODY()
 	

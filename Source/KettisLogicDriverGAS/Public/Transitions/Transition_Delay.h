@@ -4,16 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "TransitionExtensionBase.h"
-#include "TransitionDelay.generated.h"
+#include "Transition_Delay.generated.h"
 
 /**
  * Will automatically try to take the transition after the Delay.
  */
-UCLASS()
-class KETTISLOGICDRIVERGAS_API UTransitionDelay : public UTransitionExtensionBase
+UCLASS(DisplayName="Delay")
+class KETTISLOGICDRIVERGAS_API UTransition_Delay : public UTransitionExtensionBase
 {
 	GENERATED_BODY()
 public:
+
+	UTransition_Delay(const FObjectInitializer& ObjectInitializer);
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Delay", meta=(Delta = 0.01, UIMin = 0))
 	float Delay = 1;
 
@@ -55,5 +59,11 @@ protected:
 	void DelayFinished();
 
 	virtual void Serialize(FArchive& Ar) override;
+
+#if WITH_EDITOR
+
+	virtual bool ValidColor() override {return Delay > 0.0;};
+#endif
+	
 	
 };

@@ -1,16 +1,16 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Transitions/TransitionOnGameplayTagQuery.h"
+#include "Transitions/TransitionOn_GameplayTagQuery.h"
 
 
-UTransitionOnGameplayTagQuery::UTransitionOnGameplayTagQuery(const FObjectInitializer& ObjectInitializer)
+UTransitionOn_GameplayTagQuery::UTransitionOn_GameplayTagQuery(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	SetEditorIconFromDataTable(FName("GameplayTagQuery"));
 }
 
-void UTransitionOnGameplayTagQuery::PostBeginInitialize(USMStateInstance_Base* StateInstance)
+void UTransitionOn_GameplayTagQuery::PostBeginInitialize(USMStateInstance_Base* StateInstance)
 {
 	// !! Delegates are bound before we test.
 	if (!bDelegateWasBound)
@@ -21,7 +21,7 @@ void UTransitionOnGameplayTagQuery::PostBeginInitialize(USMStateInstance_Base* S
 	Super::PostBeginInitialize(StateInstance);
 }
 
-void UTransitionOnGameplayTagQuery::BindDelegates()
+void UTransitionOn_GameplayTagQuery::BindDelegates()
 {
 	Super::BindDelegates();
 
@@ -38,7 +38,7 @@ void UTransitionOnGameplayTagQuery::BindDelegates()
 			if (!TagHandleMap.Contains(Tag))
 			{
 				UpdateTargetTags(Tag, ASC->GetTagCount(Tag));
-				TagHandleMap.Add(Tag, ASC->RegisterGameplayTagEvent(Tag).AddUObject(this, &UTransitionOnGameplayTagQuery::UpdateTargetTags));
+				TagHandleMap.Add(Tag, ASC->RegisterGameplayTagEvent(Tag).AddUObject(this, &UTransitionOn_GameplayTagQuery::UpdateTargetTags));
 			}
 		}
 		
@@ -53,7 +53,7 @@ void UTransitionOnGameplayTagQuery::BindDelegates()
 			if (!TagHandleMap.Contains(Tag))
 			{
 				UpdateTargetTags(Tag, GameplayTagCountContainer->GetTagCount(Tag));
-				TagHandleMap.Add(Tag, GameplayTagCountContainer->RegisterGameplayTagEvent(Tag).AddUObject(this, &UTransitionOnGameplayTagQuery::UpdateTargetTags));
+				TagHandleMap.Add(Tag, GameplayTagCountContainer->RegisterGameplayTagEvent(Tag).AddUObject(this, &UTransitionOn_GameplayTagQuery::UpdateTargetTags));
 			}
 		}
 	}
@@ -65,7 +65,7 @@ void UTransitionOnGameplayTagQuery::BindDelegates()
 	
 }
 
-void UTransitionOnGameplayTagQuery::ClearDelegates()
+void UTransitionOn_GameplayTagQuery::ClearDelegates()
 {
 	Super::ClearDelegates();
 	
@@ -96,7 +96,7 @@ void UTransitionOnGameplayTagQuery::ClearDelegates()
 }
 
 
-bool UTransitionOnGameplayTagQuery::TestCondition()
+bool UTransitionOn_GameplayTagQuery::TestCondition()
 {
 	if (TagQuery.IsEmpty())
 	{
@@ -106,7 +106,7 @@ bool UTransitionOnGameplayTagQuery::TestCondition()
 	return TagQuery.Matches(TargetTags);
 }
 
-void UTransitionOnGameplayTagQuery::ConstructionScript_Implementation()
+void UTransitionOn_GameplayTagQuery::ConstructionScript_Implementation()
 {
 	Super::ConstructionScript_Implementation();
 	
@@ -124,7 +124,7 @@ void UTransitionOnGameplayTagQuery::ConstructionScript_Implementation()
 	
 }
 
-void UTransitionOnGameplayTagQuery::UpdateTargetTags(const FGameplayTag Tag, int32 NewCount)
+void UTransitionOn_GameplayTagQuery::UpdateTargetTags(const FGameplayTag Tag, int32 NewCount)
 {
 	// Micro optimization don't do anything if the tag is already present.
 	// Wait the delegate should only trigger on added or removed so this is not needed?
@@ -147,7 +147,7 @@ void UTransitionOnGameplayTagQuery::UpdateTargetTags(const FGameplayTag Tag, int
 	
 }
 
-void UTransitionOnGameplayTagQuery::Serialize(FArchive& Ar)
+void UTransitionOn_GameplayTagQuery::Serialize(FArchive& Ar)
 {
 	Super::Serialize(Ar);
 	

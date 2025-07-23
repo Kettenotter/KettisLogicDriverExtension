@@ -9,7 +9,7 @@
 #include "SMInstance.h"
 #include "SMNodeInstance.h"
 #include "SMStateMachineComponent.h"
-#include "Transitions/TransitionOnGameplayEvent.h"
+#include "Transitions/TransitionOn_GameplayEvent.h"
 
 void FVirtualTagData::UpdateTagMap_Internal(const FGameplayTagContainer& Container, int32 CountDelta)
 {
@@ -58,6 +58,71 @@ void FVirtualTagData::UpdateTagMap_Internal(const FGameplayTagContainer& Contain
 			//OnTagUpdated(Tag, false);
 		}
 	}
+}
+
+FDelegateHandle FVirtualTagData::AddGameplayEventTagContainerDelegate(const FGameplayTagContainer& TagFilter,
+	const FGameplayEventTagMulticastDelegate::FDelegate& Delegate)
+{
+	TPair<FGameplayTagContainer, FGameplayEventTagMulticastDelegate>* FoundPair = nullptr;
+
+	for (TPair<FGameplayTagContainer, FGameplayEventTagMulticastDelegate>& SearchPair : GameplayEventTagContainerDelegates)
+	{
+		if (TagFilter == SearchPair.Key)
+		{
+			FoundPair = &SearchPair;
+			break;
+		}
+	}
+
+	if (!FoundPair)
+	{
+		FoundPair = new(GameplayEventTagContainerDelegates) TPair<FGameplayTagContainer, FGameplayEventTagMulticastDelegate>(TagFilter, FGameplayEventTagMulticastDelegate());
+	}
+
+	return FoundPair->Value.Add(Delegate);
+}
+
+void FVirtualTagData::RemoveGameplayEventTagContainerDelegate(const FGameplayTagContainer& TagFilter,
+	FDelegateHandle DelegateHandle)
+{
+	// Look for and remove delegate, remove from array if no more delegates are bound
+	for (int32 Index = 0; Index < GameplayEventTagContainerDelegates.Num(); Index++)
+	{
+		TPair<FGameplayTagContainer, FGameplayEventTagMulticastDelegate>& SearchPair = GameplayEventTagContainerDelegates[Index];
+		if (TagFilter == SearchPair.Key)
+		{
+			SearchPair.Value.Remove(DelegateHandle);
+			if (!SearchPair.Value.IsBound())
+			{
+				GameplayEventTagContainerDelegates.RemoveAt(Index);
+			}
+			break;
+		}
+	}
+}
+
+int32 FVirtualTagData::HandleGameplayEvent(FGameplayTag EventTag, const FGameplayEventData* Payload)
+{
+	int32 TriggeredCount = 0;
+
+	if (FGameplayEventMulticastDelegate* Delegate = GenericGameplayEventCallbacks.Find(EventTag))
+	{
+		// Make a copy before broadcasting to prevent memory stomping
+		FGameplayEventMulticastDelegate DelegateCopy = *Delegate;
+		DelegateCopy.Broadcast(Payload);
+	}
+
+	// Make a copy in case it changes due to callbacks
+	TArray<TPair<FGameplayTagContainer, FGameplayEventTagMulticastDelegate>> LocalGameplayEventTagContainerDelegates = GameplayEventTagContainerDelegates;
+	for (TPair<FGameplayTagContainer, FGameplayEventTagMulticastDelegate>& SearchPair : LocalGameplayEventTagContainerDelegates)
+	{
+		if (SearchPair.Key.IsEmpty() || EventTag.MatchesAny(SearchPair.Key))
+		{
+			SearchPair.Value.Broadcast(EventTag, Payload);
+		}
+	}
+
+	return TriggeredCount;
 }
 
 UGasSmCacheSubsystem* UGasSmCacheSubsystem::Get(const UObject* WorldContext)
@@ -183,8 +248,17 @@ void UGasSmCacheSubsystem::OnStateChangedCleanData(USMInstance* Instance, FSMSta
 	}
 }
 
+void UGasSmCacheSubsystem::TryWriteLastTransition(USMTransitionInstance* Instance)
+{
+	if (LastTransitionWriteTarget)
+	{
+		*LastTransitionWriteTarget = Instance;
+		LastTransitionWriteTarget = nullptr; //Clear out the Value
+	}
+}
+
 void UGasSmCacheSubsystem::SendGameplayEventToActor_StateMachine(AActor* Actor, FGameplayTag EventTag,
-	FGameplayEventData Payload, bool& bTransitionWasTaken, USMTransitionInstance*& TransitionTaken, bool bSendToSmIfNoGAS)
+                                                                 FGameplayEventData Payload, bool& bTransitionWasTaken, USMTransitionInstance*& TransitionTaken)
 {
 	if (!Actor)
 	{
@@ -194,11 +268,12 @@ void UGasSmCacheSubsystem::SendGameplayEventToActor_StateMachine(AActor* Actor, 
 	}
 	UGasSmCacheSubsystem* Sub = Actor->GetWorld()->GetSubsystem<UGasSmCacheSubsystem>();
 
-	Sub->bCacheTransitionWasTaken = false;
-	Sub->LastTransitionTaken = nullptr;
 	
 	Payload.EventTag = EventTag; //Write the Tag to the payload.
 	//UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Actor, EventTag, Payload);
+
+	Sub->LastTransitionWriteTarget = &TransitionTaken; //We Point it to the Local Scope ptr
+	
 	if (::IsValid(Actor))
 	{
 		UAbilitySystemComponent* AbilitySystemComponent = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor);
@@ -207,10 +282,13 @@ void UGasSmCacheSubsystem::SendGameplayEventToActor_StateMachine(AActor* Actor, 
 			FScopedPredictionWindow NewScopedWindow(AbilitySystemComponent, true);
 			AbilitySystemComponent->HandleGameplayEvent(EventTag, &Payload);
 		}
-		else
+		else if (FVirtualTagData* Data = GetVirtualTagData(Actor, false))
 		{
-			//TODO: Implement propper way of reacting to Events. Using Delegates. State Machine Data Context?
-			if (bSendToSmIfNoGAS)
+			Data->HandleGameplayEvent(EventTag, &Payload);
+			
+			//Old Logic
+			
+			/*if (bSendToSmIfNoGAS)
 			{
 				if (USMStateMachineComponent* Component = Actor->FindComponentByClass<USMStateMachineComponent>())
 				{
@@ -227,13 +305,18 @@ void UGasSmCacheSubsystem::SendGameplayEventToActor_StateMachine(AActor* Actor, 
 						}
 					}
 				}
-			}
+			}*/
 			
 		}
 	}
+
+	//Check if it still points to self
+	if (Sub->LastTransitionWriteTarget == &TransitionTaken)
+	{
+		Sub->LastTransitionWriteTarget = nullptr;
+	}
 	
-	bTransitionWasTaken = Sub->bCacheTransitionWasTaken;
-	TransitionTaken = Sub->LastTransitionTaken;
+	bTransitionWasTaken = TransitionTaken != nullptr;
 }
 
 FVirtualTagData* UGasSmCacheSubsystem::GetVirtualTagData(const UObject* Object, bool AddIfMissing)

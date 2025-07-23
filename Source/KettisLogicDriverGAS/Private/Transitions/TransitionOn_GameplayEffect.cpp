@@ -1,7 +1,7 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Transitions/TransitionOnGameplayEffect.h"
+#include "Transitions/TransitionOn_GameplayEffect.h"
 
 #include "GasSmCacheSubsystem.h"
 #include "ISMEditorGraphNodeInterface.h"
@@ -11,21 +11,23 @@
 #include "TransitionFilter/ExtraFilterOptions.h"
 
 
-UTransitionOnGameplayEffect::UTransitionOnGameplayEffect(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
+UTransitionOn_GameplayEffect::UTransitionOn_GameplayEffect(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
 {
 	SetCanEvaluate(false);
 
-	if (Cast<UTransitionOnGameplayEffect>(ObjectInitializer.GetArchetype()))
+	if (Cast<UTransitionOn_GameplayEffect>(ObjectInitializer.GetArchetype()))
 	{
-		EffectTransitionData = Cast<UTransitionOnGameplayEffect>(ObjectInitializer.GetArchetype())->EffectTransitionData;
+		EffectTransitionData = Cast<UTransitionOn_GameplayEffect>(ObjectInitializer.GetArchetype())->EffectTransitionData;
 	}
-	if (Cast<UTransitionOnGameplayEffect>(GetDefault<UTransitionOnGameplayEffect>(ObjectInitializer.GetClass())))
+	if (Cast<UTransitionOn_GameplayEffect>(GetDefault<UTransitionOn_GameplayEffect>(ObjectInitializer.GetClass())))
 	{
-		EffectTransitionData = Cast<UTransitionOnGameplayEffect>(GetDefault<UTransitionOnGameplayEffect>(ObjectInitializer.GetClass()))->EffectTransitionData;
+		EffectTransitionData = Cast<UTransitionOn_GameplayEffect>(GetDefault<UTransitionOn_GameplayEffect>(ObjectInitializer.GetClass()))->EffectTransitionData;
 	}
+
+	
 }
 
-void UTransitionOnGameplayEffect::OnRootStateMachineStart_Implementation()
+void UTransitionOn_GameplayEffect::OnRootStateMachineStart_Implementation()
 {
 	Super::OnRootStateMachineStart_Implementation();
 
@@ -33,7 +35,7 @@ void UTransitionOnGameplayEffect::OnRootStateMachineStart_Implementation()
 	EffectTransitionData.Reset();
 }
 
-FTransitionOnGameplayEffectSparseData UTransitionOnGameplayEffect::GetOptionalData(FTransitionOnGameplayEffectSparseData& MyData, bool& bIsSet, bool& bIsSetTemplate)
+FTransitionOnGameplayEffectSparseData UTransitionOn_GameplayEffect::GetOptionalData(FTransitionOnGameplayEffectSparseData& MyData, bool& bIsSet, bool& bIsSetTemplate)
 {
 	
 	bIsSet = EffectTransitionData.IsSet();
@@ -41,7 +43,7 @@ FTransitionOnGameplayEffectSparseData UTransitionOnGameplayEffect::GetOptionalDa
 	bIsSetTemplate = false;
 
 
-	if (UTransitionOnGameplayEffect* Template =	UTransitionExtensionBase::GetTemplateAs<UTransitionOnGameplayEffect>())
+	if (UTransitionOn_GameplayEffect* Template =	UTransitionExtensionBase::GetTemplateAs<UTransitionOn_GameplayEffect>())
 	{
 
 		if (Template->EffectTransitionData.IsSet())
@@ -54,7 +56,7 @@ FTransitionOnGameplayEffectSparseData UTransitionOnGameplayEffect::GetOptionalDa
 	return FTransitionOnGameplayEffectSparseData();
 }
 
-void UTransitionOnGameplayEffect::ConstructionScript_Implementation()
+void UTransitionOn_GameplayEffect::ConstructionScript_Implementation()
 {
 	Super::ConstructionScript_Implementation();
 
@@ -73,7 +75,7 @@ void UTransitionOnGameplayEffect::ConstructionScript_Implementation()
 	
 	SetEditorIconFromDataTable(FName("Effect"));
 	
-	if (!EffectTransitionData.IsSet() || (EffectTransitionData->EffectTagFilter.IsEmpty() && !EffectTransitionData->EffectClassFilter))
+	if (!EffectTransitionData.IsSet())
 	{
 		NodeIconTintColor = FColor::White;
 		NodeIconTintColor.A = 0.2;
@@ -110,7 +112,7 @@ void UTransitionOnGameplayEffect::ConstructionScript_Implementation()
 
 }
 
-void UTransitionOnGameplayEffect::OnTransitionInitialized_Implementation()
+void UTransitionOn_GameplayEffect::OnTransitionInitialized_Implementation()
 {
 	Super::OnTransitionInitialized_Implementation();
 
@@ -119,17 +121,17 @@ void UTransitionOnGameplayEffect::OnTransitionInitialized_Implementation()
 		/*OnApplyGameplayEffectCallbackDelegateHandle =*/
 		if (Target == EEffectTransitionType::AppliedToSelf)
 		{
-			ASC->OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UTransitionOnGameplayEffect::OnApplyGameplayEffectCallback);
+			ASC->OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UTransitionOn_GameplayEffect::OnApplyGameplayEffectCallback);
 
 		}
 		else if (Target == EEffectTransitionType::AppliedFromSelf)
 		{
-			ASC->OnGameplayEffectAppliedDelegateToTarget.AddUObject(this, &UTransitionOnGameplayEffect::OnApplyGameplayEffectCallback);
+			ASC->OnGameplayEffectAppliedDelegateToTarget.AddUObject(this, &UTransitionOn_GameplayEffect::OnApplyGameplayEffectCallback);
 		}
 	}
 }
 
-void UTransitionOnGameplayEffect::OnTransitionShutdown_Implementation()
+void UTransitionOn_GameplayEffect::OnTransitionShutdown_Implementation()
 {
 	Super::OnTransitionShutdown_Implementation();
 
@@ -146,10 +148,10 @@ void UTransitionOnGameplayEffect::OnTransitionShutdown_Implementation()
 }
 
 
-void UTransitionOnGameplayEffect::OnApplyGameplayEffectCallback(UAbilitySystemComponent* inTarget,
+void UTransitionOn_GameplayEffect::OnApplyGameplayEffectCallback(UAbilitySystemComponent* inTarget,
                                                                 const FGameplayEffectSpec& SpecApplied, FActiveGameplayEffectHandle ActiveHandle)
 {
-	UTransitionOnGameplayEffect* Template =	GetTemplateAs<class UTransitionOnGameplayEffect>();
+	UTransitionOn_GameplayEffect* Template =	GetTemplateAs<class UTransitionOn_GameplayEffect>();
 
 	if (!Template || !Template->EffectTransitionData.IsSet())
 	{
@@ -218,7 +220,7 @@ void UTransitionOnGameplayEffect::OnApplyGameplayEffectCallback(UAbilitySystemCo
 	SetToTrueAndEvaluate();
 }
 
-void UTransitionOnGameplayEffect::Serialize(FArchive& Ar)
+void UTransitionOn_GameplayEffect::Serialize(FArchive& Ar)
 {
 	//Clear out defaults to save memory.
 	if (Ar.IsCooking())

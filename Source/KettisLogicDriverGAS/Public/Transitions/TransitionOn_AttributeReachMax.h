@@ -4,19 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "TransitionExtensionBase.h"
-#include "TransitionOnAttributeReachMax.generated.h"
+#include "TransitionOn_AttributeReachMax.generated.h"
 
 /**
- * 
+ * Takes the Transition once the Attribute reaches the value of the max Attribute.
  */
 UCLASS()
-class KETTISLOGICDRIVERGAS_API UTransitionOnAttributeReachMax : public UTransitionExtensionDelegateBinding
+class KETTISLOGICDRIVERGAS_API UTransitionOn_AttributeReachMax : public UTransitionExtensionDelegateBinding
 {
 	GENERATED_BODY()
 	
 public:
 
-	UTransitionOnAttributeReachMax(const FObjectInitializer& ObjectInitializer);
+	UTransitionOn_AttributeReachMax(const FObjectInitializer& ObjectInitializer);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Ability")
 	FGameplayAttribute TestAttribute;
@@ -37,4 +37,10 @@ protected:
 	virtual bool TestCondition() override;
 	
 	virtual void AttributeChanged(const FOnAttributeChangeData& Data) {TriggerUpdate();}
+
+#if WITH_EDITOR
+
+	virtual bool ValidColor() override {return TestAttribute.IsValid() && MaxAttribute.IsValid();};
+	
+#endif
 };

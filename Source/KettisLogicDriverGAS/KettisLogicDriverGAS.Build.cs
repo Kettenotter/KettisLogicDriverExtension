@@ -30,7 +30,8 @@ public class KettisLogicDriverGAS : ModuleRules
                 "GameplayAbilities",
                 "GameplayTags",
                 "AbilitySM_GAS",
-                "AbilitySMEntity"
+                "AbilitySMEntity",
+                "KettisLogicDriverExtension"
             }
         );
 

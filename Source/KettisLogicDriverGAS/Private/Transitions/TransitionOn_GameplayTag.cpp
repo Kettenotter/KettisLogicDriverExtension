@@ -1,10 +1,10 @@
 
 
-#include "Transitions/TransitionOnGameplayTag.h"
+#include "Transitions/TransitionOn_GameplayTag.h"
 
 #include "GasSmCacheSubsystem.h"
 
-UTransitionOnGameplayTag::UTransitionOnGameplayTag(const FObjectInitializer& ObjectInitializer)
+UTransitionOn_GameplayTag::UTransitionOn_GameplayTag(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	SetEditorIconFromDataTable(FName("GameplayTag"));
@@ -12,23 +12,23 @@ UTransitionOnGameplayTag::UTransitionOnGameplayTag(const FObjectInitializer& Obj
 
 
 
-void UTransitionOnGameplayTag::BindDelegates()
+void UTransitionOn_GameplayTag::BindDelegates()
 {
 	Super::BindDelegates();
 	
 	
 	if (UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent())
 	{
-		DelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &UTransitionOnGameplayTag::TagChanged);
+		DelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &UTransitionOn_GameplayTag::TagChanged);
 		
 	}
 	else if (FGameplayTagCountContainer* GameplayTagCountContainer = GetGameplayTagCountContainer())
 	{
-		DelegateHandle = GameplayTagCountContainer->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &UTransitionOnGameplayTag::TagChanged);
+		DelegateHandle = GameplayTagCountContainer->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &UTransitionOn_GameplayTag::TagChanged);
 	}
 }
 
-void UTransitionOnGameplayTag::ClearDelegates()
+void UTransitionOn_GameplayTag::ClearDelegates()
 {
 	Super::ClearDelegates();
 
@@ -50,7 +50,7 @@ void UTransitionOnGameplayTag::ClearDelegates()
 }
 
 
-bool UTransitionOnGameplayTag::TestCondition()
+bool UTransitionOn_GameplayTag::TestCondition()
 {
 	
 	if (int32 TagCount = GetGameplayTagCount(Tag); TagCount >= 0)
@@ -62,7 +62,7 @@ bool UTransitionOnGameplayTag::TestCondition()
 }
 
 
-void UTransitionOnGameplayTag::ConstructionScript_Implementation()
+void UTransitionOn_GameplayTag::ConstructionScript_Implementation()
 {
 	Super::ConstructionScript_Implementation();
 
@@ -76,7 +76,7 @@ void UTransitionOnGameplayTag::ConstructionScript_Implementation()
 #endif
 }
 
-void UTransitionOnGameplayTag::Serialize(FArchive& Ar)
+void UTransitionOn_GameplayTag::Serialize(FArchive& Ar)
 {
 	Super::Serialize(Ar);
 

@@ -34,15 +34,37 @@ struct FCachedEffectApplication
 	FActiveGameplayEffectHandle ActiveHandle;
 };
 
+//Implements the Tag and Event behavior of the ASC but without it.
 USTRUCT()
 struct FVirtualTagData
 {
 	GENERATED_BODY()
+	virtual ~FVirtualTagData() = default;
 	FVirtualTagData() = default;
 
-	FGameplayTagCountContainer GameplayTagCountContainer;
+	FGameplayTagCountContainer GameplayTagCountContainer = FGameplayTagCountContainer();
 
+	TMap<FGameplayTag, FGameplayEventMulticastDelegate> GenericGameplayEventCallbacks;
+
+	/** List of gameplay tag container filters, and the delegates they call */
+	TArray<TPair<FGameplayTagContainer, FGameplayEventTagMulticastDelegate>> GameplayEventTagContainerDelegates;
+	
+	/** These are the same functions as on the ASC, I hope Epic doesn't put me into jail
+	 * Makes the most sense to have the same behavior and not some random, different bugs.
+	 * Also for maintainability if something changes.
+	 */
+
+	/** */
 	void UpdateTagMap_Internal(const FGameplayTagContainer& Container, int32 CountDelta);
+
+	/** Adds a new delegate to call when gameplay events happen. It will only be called if it matches any tags in passed filter container */
+	FDelegateHandle AddGameplayEventTagContainerDelegate(const FGameplayTagContainer& TagFilter, const FGameplayEventTagMulticastDelegate::FDelegate& Delegate);
+
+	/** Remotes previously registered delegate */
+	void RemoveGameplayEventTagContainerDelegate(const FGameplayTagContainer& TagFilter, FDelegateHandle DelegateHandle);
+
+	/** Executes a gameplay event. Returns the number of successful ability activations triggered by the event */
+	virtual int32 HandleGameplayEvent(FGameplayTag EventTag, const FGameplayEventData* Payload);
 };
 
 UENUM()
@@ -64,47 +86,29 @@ class KETTISLOGICDRIVERGAS_API UGasSmCacheSubsystem : public UWorldSubsystem
 
 public:
 
-	UFUNCTION(BlueprintCallable)
-	static UGasSmCacheSubsystem* Get(const UObject* WorldContext);
+	/** Pointers to the Virtual Tag Data */
+	UPROPERTY()
+	TMap<TObjectPtr<const UObject>, FVirtualTagData> VirtualTagContainers;
 	
-	/**
-	 * When an Gameplay Event caused a transition we store the data here.
-	 */
+	/** When an Gameplay Event caused a transition we store the data here. */
 	UPROPERTY()
 	TMap<TObjectPtr<USMNodeInstance> , FCachedSmGameplayEvent> EventMap;
 
-	/**
-	 * When an Effect Application Caused a transition we store the data here.
-	 */
+	/** When an Effect Application Caused a transition we store the data here. */
 	UPROPERTY()
 	TMap<TObjectPtr<USMNodeInstance> , FCachedEffectApplication> EffectDataMap;
 	
-
-	
-	
-	//TODO: Implement tags without Ability System Components. Or spawn proxy ASCs? Only for the purpose of tags?
-	/** Sometimes we don't want to use Ability System Components.
-	* This is an alternative workflow where we store the tags on the State Machine Component.
-	*/ 
-	//UPROPERTY()
-	//TMap<TObjectPtr<USMStateMachineComponent>, FGameplayTagContainer> LooseTags;
-	
 public:
 
-	void StoreEventData(USMNodeInstance* TargetNodeInstance, const FGameplayEventData* EventData);
-	
-	UFUNCTION()
-	void StoreEffectData(USMNodeInstance* TargetNodeInstance, const FCachedEffectApplication& EventData);
+	/**
+	 * This function works the same as Send Gameplay Event to Actor but will return the transition if one was taken.
+	 * From this Transition you can get the state machine, the node it is connected to, the context... additional information you stored on the transition.
+	 * 
+	 * Set the Instigator in the Payload to the one who send the Event.
+	 */
+	UFUNCTION(BlueprintCallable, Category = Ability, Meta = (Tooltip = "Same as the Send Gameplay Event to Actor but will return the transition if one was taken."))
+	static void SendGameplayEventToActor_StateMachine(AActor* Actor, FGameplayTag EventTag, FGameplayEventData Payload, bool& bTransitionWasTaken, USMTransitionInstance*& TransitionTaken);
 
-	UFUNCTION()
-	void RemoveEventData(USMNodeInstance* TargetNodeInstance);
-
-	UFUNCTION()
-	void RemoveEffectData(USMNodeInstance* TargetNodeInstance);
-
-	//UFUNCTION(BlueprintCallable)
-	//static FGameplayTagContainer GetStateMachineTags(AActor* Target);
-	
 	UFUNCTION(BlueprintCallable, meta=(ExpandBoolAsExecs = "ReturnValue", DefaultToSelf = "NodeInstance"))
 	static bool GetTransitionDataGameplayEvent(USMNodeInstance* NodeInstance, FGameplayEventData& EventData);
 
@@ -123,30 +127,38 @@ public:
 	UFUNCTION(BlueprintCallable, meta=(ExpandBoolAsExecs = "ReturnValue", DefaultToSelf = "NodeInstance"))
 	static bool GetTransitionDataSourceActor(USMNodeInstance* NodeInstance, AActor*& SourceActor);
 
+	UFUNCTION(BlueprintCallable)
+	static UGasSmCacheSubsystem* Get(const UObject* WorldContext);
+	
+	void StoreEventData(USMNodeInstance* TargetNodeInstance, const FGameplayEventData* EventData);
+	
+	UFUNCTION()
+	void StoreEffectData(USMNodeInstance* TargetNodeInstance, const FCachedEffectApplication& EventData);
+
+	UFUNCTION()
+	void RemoveEventData(USMNodeInstance* TargetNodeInstance);
+
+	UFUNCTION()
+	void RemoveEffectData(USMNodeInstance* TargetNodeInstance);
+
+	//UFUNCTION(BlueprintCallable)
+	//static FGameplayTagContainer GetStateMachineTags(AActor* Target);
 	
 	
 	UFUNCTION()
 	void OnStateChangedCleanData( class USMInstance* Instance, struct FSMStateInfo NewState, struct FSMStateInfo PreviousState);
+
 	
-	bool bCacheTransitionWasTaken;
-	USMTransitionInstance* LastTransitionTaken;
+	//Points to the Value in the Function Scope - weird but should work
+	USMTransitionInstance** LastTransitionWriteTarget;
+
+	void TryWriteLastTransition(USMTransitionInstance* Instance);
 
 	//TODO: Implement send event to State Machine
 
-	/**
-	 * This function works the same as Send Gameplay Event to Actor but will return the transition if one was taken.
-	 * From this Transition you can get the state machine, the node it is connected to, the context... additional information you stored on the transition.
-	 * 
-	 * Set the Instigator in the Payload to the one who send the Event.
-	 */
-	UFUNCTION(BlueprintCallable, Category = Ability, Meta = (Tooltip = "Same as the Send Gameplay Event to Actor but will return the transition if one was taken."))
-	static void SendGameplayEventToActor_StateMachine(AActor* Actor, FGameplayTag EventTag, FGameplayEventData Payload, bool& bTransitionWasTaken, USMTransitionInstance*& TransitionTaken, bool bSendToSmIfNoGAS = true);
+
 
 	static FVirtualTagData* GetVirtualTagData(const UObject* Object, bool AddIfMissing);
 	
-	/**
-	 * Instead of having them inside 
-	 */
-	UPROPERTY()
-	TMap<TObjectPtr<const UObject>, FVirtualTagData> VirtualTagContainers;
+	
 };

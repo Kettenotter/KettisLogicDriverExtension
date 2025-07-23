@@ -105,6 +105,8 @@ protected:
 #if WITH_EDITOR
 	
 	void SetTransitionName(FString Name);
+
+	virtual bool ValidColor(){return true;};
 	
 #endif
 	
@@ -127,7 +129,7 @@ T* UTransitionExtensionBase::GetTemplateAs()
 	
 }
 
-UCLASS()
+UCLASS(Abstract)
 class KETTISLOGICDRIVERGAS_API UTransitionExtensionDelegateBinding : public UTransitionExtensionBase
 {
 	GENERATED_BODY()

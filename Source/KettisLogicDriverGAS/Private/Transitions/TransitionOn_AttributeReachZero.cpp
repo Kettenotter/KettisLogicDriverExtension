@@ -1,13 +1,13 @@
-#include "Transitions/TransitionOnAttributeReachZero.h"
+#include "Transitions/TransitionOn_AttributeReachZero.h"
 #include "AbilitySystemComponent.h"
 
-UTransitionOnAttributeReachZero::UTransitionOnAttributeReachZero(const FObjectInitializer& ObjectInitializer)
+UTransitionOn_AttributeReachZero::UTransitionOn_AttributeReachZero(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer)
 {
 	SetEditorIconFromDataTable(FName("AttributeZero"));
 }
 
-void UTransitionOnAttributeReachZero::BindDelegates()
+void UTransitionOn_AttributeReachZero::BindDelegates()
 {
 	Super::BindDelegates();
 
@@ -18,11 +18,11 @@ void UTransitionOnAttributeReachZero::BindDelegates()
 
 	if (UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent())
 	{
-		DelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Attribute).AddUObject(this, &UTransitionOnAttributeReachZero::AttributeChanged);
+		DelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Attribute).AddUObject(this, &UTransitionOn_AttributeReachZero::AttributeChanged);
 	}
 }
 
-void UTransitionOnAttributeReachZero::ClearDelegates()
+void UTransitionOn_AttributeReachZero::ClearDelegates()
 {
 	Super::ClearDelegates();
 
@@ -37,7 +37,7 @@ void UTransitionOnAttributeReachZero::ClearDelegates()
 	}
 }
 
-bool UTransitionOnAttributeReachZero::TestCondition()
+bool UTransitionOn_AttributeReachZero::TestCondition()
 {
 	
 	if (const UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent())

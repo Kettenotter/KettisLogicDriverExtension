@@ -10,7 +10,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(DisplayName="Add Tag", Category = "GAS")
 class KETTISLOGICDRIVERGAS_API UGasStateAddLooseTag : public UGasStateBase
 {
 	GENERATED_BODY()

@@ -1,18 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Transitions/TransitionOnAttributeReachMax.h"
+#include "Transitions/TransitionOn_AttributeReachMax.h"
 
 #include "AbilitySystemGlobals.h"
 
 
-UTransitionOnAttributeReachMax::UTransitionOnAttributeReachMax(const FObjectInitializer& ObjectInitializer)
+UTransitionOn_AttributeReachMax::UTransitionOn_AttributeReachMax(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer)
 {
-	SetEditorIconFromDataTable(FName("AttributeZero"));
+	SetEditorIconFromDataTable(FName("AttributeMax"));
 }
 
-void UTransitionOnAttributeReachMax::BindDelegates()
+void UTransitionOn_AttributeReachMax::BindDelegates()
 {
 	Super::BindDelegates();
 
@@ -23,13 +23,13 @@ void UTransitionOnAttributeReachMax::BindDelegates()
 
 	if (UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent())
 	{
-		DelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(TestAttribute).AddUObject(this, &UTransitionOnAttributeReachMax::AttributeChanged);
-		DelegateHandleMax = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(MaxAttribute).AddUObject(this, &UTransitionOnAttributeReachMax::AttributeChanged);
+		DelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(TestAttribute).AddUObject(this, &UTransitionOn_AttributeReachMax::AttributeChanged);
+		DelegateHandleMax = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(MaxAttribute).AddUObject(this, &UTransitionOn_AttributeReachMax::AttributeChanged);
 
 	}
 }
 
-void UTransitionOnAttributeReachMax::ClearDelegates()
+void UTransitionOn_AttributeReachMax::ClearDelegates()
 {
 	Super::ClearDelegates();
 
@@ -46,7 +46,7 @@ void UTransitionOnAttributeReachMax::ClearDelegates()
 	}
 }
 
-bool UTransitionOnAttributeReachMax::TestCondition()
+bool UTransitionOn_AttributeReachMax::TestCondition()
 {
 	
 	if (const UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent())

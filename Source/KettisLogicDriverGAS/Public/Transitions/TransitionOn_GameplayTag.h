@@ -1,17 +1,20 @@
 #pragma once
 
 #include "TransitionExtensionBase.h"
-#include "TransitionOnGameplayTag.generated.h"
+#include "TransitionOn_GameplayTag.generated.h"
 
 
+/**
+ * Takes the Transition when the Tag is present. Works with an ASC or without one.
+ */
 UCLASS()
-class KETTISLOGICDRIVERGAS_API UTransitionOnGameplayTag : public UTransitionExtensionDelegateBinding
+class KETTISLOGICDRIVERGAS_API UTransitionOn_GameplayTag : public UTransitionExtensionDelegateBinding
 {
 	GENERATED_BODY()
 
 public:
 
-	UTransitionOnGameplayTag(const FObjectInitializer& ObjectInitializer);
+	UTransitionOn_GameplayTag(const FObjectInitializer& ObjectInitializer);
 
 protected:
 

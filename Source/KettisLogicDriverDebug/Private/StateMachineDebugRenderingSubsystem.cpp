@@ -243,7 +243,7 @@ void UStateMachineDebugRenderingSubsystem::Tick(float DeltaTime)
 						float Distance = FVector::Dist(CameraManager->GetCameraLocation(), ToDraw.Key->GetActorLocation());
 						TArray<FString> Lines;
 						ToDraw.Value.ParseIntoArray(Lines, TEXT("\n"), true);
-						OffsetText = Distance * 0.0235f * Lines.Num();
+						OffsetText = Distance * 0.02f * Lines.Num();
 						// Offset by the other line numbers
 
 						OffsetText += Distance * 0.01f;

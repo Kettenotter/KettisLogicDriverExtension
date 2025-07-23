@@ -17,7 +17,7 @@ enum EEffectTargetOption  :uint8
 	CustomTarget UMETA(ToolTip = "The Custom Input Parameter"),
 	TransitionSource UMETA(ToolTip = "Set from the Transition entered the State. The Actor who applied an effect to us or the Actor set in the Gameplay Event Instigator")
 };
-UCLASS()
+UCLASS(DisplayName= "Apply Effect", Category = "GAS")
 class KETTISLOGICDRIVERGAS_API UGasStateApplyEffect : public UGasStateBase
 {
 	GENERATED_BODY()

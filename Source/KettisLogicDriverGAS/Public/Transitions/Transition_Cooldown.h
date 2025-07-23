@@ -4,24 +4,26 @@
 
 #include "CoreMinimal.h"
 #include "TransitionExtensionBase.h"
-#include "TransitionCooldown.generated.h"
+#include "Transition_Cooldown.generated.h"
 
 /**
  * Will instantly be set to true. But can only be taken again after the cooldown has finished.
  */
-UCLASS()
-class KETTISLOGICDRIVERGAS_API UTransitionCooldown : public UTransitionExtensionBase
+UCLASS(DisplayName="Cooldown")
+class KETTISLOGICDRIVERGAS_API UTransition_Cooldown : public UTransitionExtensionBase
 {
 	GENERATED_BODY()
 	
 public:
+	UTransition_Cooldown(const FObjectInitializer& ObjectInitializer);
+
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Cooldown", meta=(Delta = 0.01, UIMin = 0))
 	float Cooldown = 1;
 
 	UFUNCTION(BlueprintCallable)
 	float GetRemainingCooldownTime() const;
 	
-	UTransitionCooldown(const FObjectInitializer& ObjectInitializer);
 protected:
 	
 	virtual void ConstructionScript_Implementation() override;

@@ -1,11 +1,19 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Transitions/TransitionDelay.h"
+#include "Transitions/Transition_Delay.h"
 
 #include "ISMEditorGraphNodeInterface.h"
 
-void UTransitionDelay::SetNewDelayTime(float NewTime, bool bRestart)
+
+
+UTransition_Delay::UTransition_Delay(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+{
+	SetEditorIconFromDataTable(FName("Delay"));
+
+}
+
+void UTransition_Delay::SetNewDelayTime(float NewTime, bool bRestart)
 {
 	Delay = NewTime; //Always set the new time
 	
@@ -32,12 +40,12 @@ void UTransitionDelay::SetNewDelayTime(float NewTime, bool bRestart)
 	}
 	else
 	{
-		GetWorld()->GetTimerManager().SetTimer(DelayHandle, FTimerDelegate::CreateUObject(this, &UTransitionDelay::DelayFinished), NewTime, false);
+		GetWorld()->GetTimerManager().SetTimer(DelayHandle, FTimerDelegate::CreateUObject(this, &UTransition_Delay::DelayFinished), NewTime, false);
 
 	}
 }
 
-void UTransitionDelay::RestartDelay()
+void UTransition_Delay::RestartDelay()
 {
 	if (!IsInitialized())
 	{
@@ -52,10 +60,10 @@ void UTransitionDelay::RestartDelay()
 
 	}
 	
-	GetWorld()->GetTimerManager().SetTimer(DelayHandle, FTimerDelegate::CreateUObject(this, &UTransitionDelay::DelayFinished), Delay, false);
+	GetWorld()->GetTimerManager().SetTimer(DelayHandle, FTimerDelegate::CreateUObject(this, &UTransition_Delay::DelayFinished), Delay, false);
 }
 
-float UTransitionDelay::GetRemainingTime() const
+float UTransition_Delay::GetRemainingTime() const
 {
 	if (DelayHandle.IsValid())
 	{
@@ -64,7 +72,7 @@ float UTransitionDelay::GetRemainingTime() const
 	return 0;
 }
 
-void UTransitionDelay::ConstructionScript_Implementation()
+void UTransition_Delay::ConstructionScript_Implementation()
 {
 	Super::ConstructionScript_Implementation();
 
@@ -73,7 +81,8 @@ void UTransitionDelay::ConstructionScript_Implementation()
 	{
 		return;
 	}
-
+	
+	SetEditorColor(true, !ValidColor());
 
 	FString Name = TEXT("Delay ") + FString::SanitizeFloat(Delay, 0) + "s";
 	SetTransitionName(Name);	
@@ -81,7 +90,7 @@ void UTransitionDelay::ConstructionScript_Implementation()
 	
 }
 
-void UTransitionDelay::OnTransitionInitialized_Implementation()
+void UTransition_Delay::OnTransitionInitialized_Implementation()
 {
 	Super::OnTransitionInitialized_Implementation();
 
@@ -91,10 +100,10 @@ void UTransitionDelay::OnTransitionInitialized_Implementation()
 		GetWorld()->GetTimerManager().ClearTimer(DelayHandle);
 
 	}
-	GetWorld()->GetTimerManager().SetTimer(DelayHandle, FTimerDelegate::CreateUObject(this, &UTransitionDelay::DelayFinished), Delay, false);
+	GetWorld()->GetTimerManager().SetTimer(DelayHandle, FTimerDelegate::CreateUObject(this, &UTransition_Delay::DelayFinished), Delay, false);
 }
 
-void UTransitionDelay::OnTransitionEntered_Implementation()
+void UTransition_Delay::OnTransitionEntered_Implementation()
 {
 	Super::OnTransitionShutdown_Implementation();
 	
@@ -106,7 +115,7 @@ void UTransitionDelay::OnTransitionEntered_Implementation()
 	}
 }
 
-void UTransitionDelay::OnTransitionShutdown_Implementation()
+void UTransition_Delay::OnTransitionShutdown_Implementation()
 {
 	Super::OnTransitionShutdown_Implementation();
 	
@@ -118,7 +127,7 @@ void UTransitionDelay::OnTransitionShutdown_Implementation()
 	}
 }
 
-void UTransitionDelay::DelayFinished()
+void UTransition_Delay::DelayFinished()
 {
 	DelayHandle.Invalidate();
 	bCanEnterTransition = true;
@@ -126,7 +135,7 @@ void UTransitionDelay::DelayFinished()
 	
 }
 
-void UTransitionDelay::Serialize(FArchive& Ar)
+void UTransition_Delay::Serialize(FArchive& Ar)
 {
 	Super::Serialize(Ar);
 

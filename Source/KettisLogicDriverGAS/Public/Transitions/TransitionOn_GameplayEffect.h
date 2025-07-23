@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "InstancedStruct.h"
 #include "TransitionExtensionBase.h"
-#include "TransitionOnGameplayEffect.generated.h"
+#include "TransitionOn_GameplayEffect.generated.h"
 
 
 UENUM()
@@ -78,13 +78,13 @@ struct FTransitionOnGameplayEffectSparseData
 /**
  * Takes the transition once a gameplay effect is applied to the context ASC or applies it to another which matches the requirements.
  */
-UCLASS(/*SparseClassDataTypes= TransitionOnGameplayEffectSparseData,*/)
-class KETTISLOGICDRIVERGAS_API UTransitionOnGameplayEffect : public UTransitionExtensionBase
+UCLASS()
+class KETTISLOGICDRIVERGAS_API UTransitionOn_GameplayEffect : public UTransitionExtensionBase
 {
 	GENERATED_BODY()
 public:
 
-	UTransitionOnGameplayEffect(const FObjectInitializer& ObjectInitializer);
+	UTransitionOn_GameplayEffect(const FObjectInitializer& ObjectInitializer);
 
 protected:
 	virtual void OnRootStateMachineStart_Implementation() override;

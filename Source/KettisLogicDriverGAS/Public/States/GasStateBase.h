@@ -13,7 +13,7 @@ inline uint8 GSerializeVersion_GasState = 0;
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class KETTISLOGICDRIVERGAS_API UGasStateBase : public USMStateInstance
 {
 	GENERATED_BODY()

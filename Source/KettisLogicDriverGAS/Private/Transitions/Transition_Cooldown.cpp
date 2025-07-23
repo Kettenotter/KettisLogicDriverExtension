@@ -1,12 +1,12 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Transitions/TransitionCooldown.h"
+#include "Transitions/Transition_Cooldown.h"
 
 #include "ISMEditorGraphNodeInterface.h"
 
 
-float UTransitionCooldown::GetRemainingCooldownTime() const
+float UTransition_Cooldown::GetRemainingCooldownTime() const
 {
 	if (DelayHandle.IsValid())
 	{
@@ -15,12 +15,13 @@ float UTransitionCooldown::GetRemainingCooldownTime() const
 	return 0;
 }
 
-UTransitionCooldown::UTransitionCooldown(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
+UTransition_Cooldown::UTransition_Cooldown(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
 {
 	bCanEnterTransition = true;
+	SetEditorIconFromDataTable("Cooldown");
 }
 
-void UTransitionCooldown::ConstructionScript_Implementation()
+void UTransition_Cooldown::ConstructionScript_Implementation()
 {
 	Super::ConstructionScript_Implementation();
 
@@ -38,7 +39,7 @@ void UTransitionCooldown::ConstructionScript_Implementation()
 	
 }
 
-void UTransitionCooldown::OnRootStateMachineStop_Implementation()
+void UTransition_Cooldown::OnRootStateMachineStop_Implementation()
 {
 	Super::OnRootStateMachineStop_Implementation();
 
@@ -50,30 +51,30 @@ void UTransitionCooldown::OnRootStateMachineStop_Implementation()
 	}
 }
 
-void UTransitionCooldown::OnTransitionShutdown_Implementation()
+void UTransition_Cooldown::OnTransitionShutdown_Implementation()
 {
 	Super::OnTransitionShutdown_Implementation();
 
 	
 }
 
-void UTransitionCooldown::OnTransitionEntered_Implementation()
+void UTransition_Cooldown::OnTransitionEntered_Implementation()
 {
 	Super::OnTransitionEntered_Implementation();
 
-	GetWorld()->GetTimerManager().SetTimer(DelayHandle, FTimerDelegate::CreateUObject(this, &UTransitionCooldown::DelayFinished), Cooldown, false);
+	GetWorld()->GetTimerManager().SetTimer(DelayHandle, FTimerDelegate::CreateUObject(this, &UTransition_Cooldown::DelayFinished), Cooldown, false);
 
 	bCanEnterTransition = false;
 }
 
-void UTransitionCooldown::DelayFinished()
+void UTransition_Cooldown::DelayFinished()
 {
 	bCanEnterTransition = true;
 	DelayHandle.Invalidate();
 	EvaluateFromManuallyBoundEvent();
 }
 
-void UTransitionCooldown::Serialize(FArchive& Ar)
+void UTransition_Cooldown::Serialize(FArchive& Ar)
 {
 	Super::Serialize(Ar);
 	

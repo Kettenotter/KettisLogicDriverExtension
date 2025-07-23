@@ -45,7 +45,7 @@ enum class ECharacterAttachment : uint8
 /**
  * 
  */
-UCLASS(DisplayName="SpawnParticleSystem")
+UCLASS(DisplayName="SpawnParticleSystem", Category = "Visuals")
 class KETTISLOGICDRIVEREXTENSION_API UState_SpawnParticleSystem : public USMStateInstance
 {
 	GENERATED_BODY()

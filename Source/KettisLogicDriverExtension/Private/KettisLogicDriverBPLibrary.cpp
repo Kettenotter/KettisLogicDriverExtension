@@ -251,6 +251,15 @@ bool UKettisLogicDriverBPLibrary::SwitchOnActive(USMStateInstance* NodeInstance)
 	return 	NodeInstance->IsActive();
 }
 
+FTransform UKettisLogicDriverBPLibrary::GetContextTransform(const TScriptInterface<ISMInstanceInterface> NodeInstance)
+{
+	if (AActor* ContextActor = GetContextAsActor(NodeInstance))
+	{
+		return ContextActor->GetActorTransform();
+	}
+	return FTransform();
+}
+
 #if WITH_EDITOR
 #include "EditorUtilitySubsystem.h"
 #include "Editor.h"

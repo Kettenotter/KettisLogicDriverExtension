@@ -7,6 +7,7 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
 #include "GasSmCacheSubsystem.h"
+#include "KettisLogicDriverBPLibrary.h"
 
 bool ULogicDriverGasBlueprintLibrary::AddLooseGameplayTags_StateMachine(AActor* Actor,
                                                                         const FGameplayTagContainer& GameplayTags, bool bShouldReplicate)
@@ -41,6 +42,19 @@ bool ULogicDriverGasBlueprintLibrary::RemoveLooseGameplayTags_StateMachine(AActo
 	}
 	
 	return false;
+}
+
+bool ULogicDriverGasBlueprintLibrary::AddOrRemoveGameplayTag_StateMachine(AActor* Actor,
+	const FGameplayTag& GameplayTag, bool bRemoveTag, bool bShouldReplicate)
+{
+	if (bRemoveTag)
+	{
+		return RemoveLooseGameplayTags_StateMachine(Actor, FGameplayTagContainer(GameplayTag), bShouldReplicate);
+	}
+	else
+	{
+		return AddLooseGameplayTags_StateMachine(Actor, FGameplayTagContainer(GameplayTag), bShouldReplicate);
+	}
 }
 
 bool ULogicDriverGasBlueprintLibrary::HasGameplayTag_StateMachine(AActor* Actor, const FGameplayTag& Tag)
@@ -84,4 +98,24 @@ FGameplayTagContainer ULogicDriverGasBlueprintLibrary::GetTags_StateMachine(AAct
 	}
 	return FGameplayTagContainer();
 
+}
+bool ULogicDriverGasBlueprintLibrary::HasGameplayTag(const TScriptInterface<ISMInstanceInterface> NodeInstance,
+	const FGameplayTag& Tag)
+{
+	//Checks on the GAS System 
+	if (UAbilitySystemComponent* ASC = UKettisLogicDriverBPLibrary::GetAbilitySystemComponentFromContext(NodeInstance))
+	{
+		return ASC->GetGameplayTagCount(Tag) > 0;
+	}
+
+	//Checks on the Virtual Container
+	if (UObject* Context = UKettisLogicDriverBPLibrary::GetContextFromObject(NodeInstance.GetObject()))
+	{
+		if (FVirtualTagData* Data = UGasSmCacheSubsystem::GetVirtualTagData(Context, false))
+		{
+			return Data->GameplayTagCountContainer.GetTagCount(Tag) > 0;
+		}
+		return false;
+	}
+	return false;
 }

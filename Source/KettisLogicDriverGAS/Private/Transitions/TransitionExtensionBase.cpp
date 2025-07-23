@@ -311,7 +311,7 @@ void UTransitionExtensionDelegateBinding::ConstructionScript_Implementation()
 	Super::ConstructionScript_Implementation();
 
 #if WITH_EDITOR
-	SetEditorColor(!bInvertCondition);
+	SetEditorColor(!bInvertCondition, !ValidColor());
 #endif
 	
 }

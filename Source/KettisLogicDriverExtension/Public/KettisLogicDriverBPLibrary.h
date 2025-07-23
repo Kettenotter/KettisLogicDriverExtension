@@ -15,6 +15,8 @@ class KETTISLOGICDRIVEREXTENSION_API UKettisLogicDriverBPLibrary : public UBluep
 {
 	GENERATED_BODY()
 
+public:
+
 	//__ Cast to Context functions __//
 
 	/*
@@ -78,6 +80,8 @@ class KETTISLOGICDRIVEREXTENSION_API UKettisLogicDriverBPLibrary : public UBluep
 	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Casting",
 	meta=(DefaultToSelf = "NodeInstance",HidePin = "NodeInstance", ExpandBoolAsExecs = "ReturnValue", CompactNodeTitle = "PrimRoot"))
 	static bool GetContextRootAsPrimitiveChecked(const TScriptInterface<ISMInstanceInterface> NodeInstance, UPrimitiveComponent*& PrimitiveComp);
+
+
 	
 	//__ Ability System Component __//
 	
@@ -105,6 +109,7 @@ class KETTISLOGICDRIVEREXTENSION_API UKettisLogicDriverBPLibrary : public UBluep
 
 	
 	
+	
 	//__ UTILITY __//
 
 	/**
@@ -122,6 +127,13 @@ class KETTISLOGICDRIVEREXTENSION_API UKettisLogicDriverBPLibrary : public UBluep
 	*/
 	UFUNCTION(BlueprintCallable, Category= "LogicDriver|Extension|Utility", meta=(DefaultToSelf = "NodeInstance", ExpandBoolAsExecs = "ReturnValue"))
 	static bool	SwitchOnActive(USMStateInstance* NodeInstance);
+
+	/**
+	* Gets the Transform of the Context Actor
+	*/
+	UFUNCTION(BlueprintCallable,Category= "LogicDriver|Extension|Utility",
+	BlueprintPure, meta=(DefaultToSelf = "NodeInstance", HidePin = "NodeInstance", CompactNodeTitle = "Transform"))
+	static FTransform GetContextTransform(const TScriptInterface<ISMInstanceInterface> NodeInstance);
 	
 	//__ Editor __//
 

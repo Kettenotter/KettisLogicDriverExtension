@@ -3,16 +3,20 @@
 #pragma once
 
 #include "TransitionExtensionBase.h"
-#include "TransitionOnGameplayTagQuery.generated.h"
+#include "TransitionOn_GameplayTagQuery.generated.h"
 
+
+/**
+ * Takes the Transition when the Tag Query is true. Works with an ASC or without one.
+ */
 UCLASS()
-class KETTISLOGICDRIVERGAS_API UTransitionOnGameplayTagQuery : public UTransitionExtensionDelegateBinding
+class KETTISLOGICDRIVERGAS_API UTransitionOn_GameplayTagQuery : public UTransitionExtensionDelegateBinding
 {
 	GENERATED_BODY()
 
 public:
 
-	UTransitionOnGameplayTagQuery(const FObjectInitializer& ObjectInitializer);
+	UTransitionOn_GameplayTagQuery(const FObjectInitializer& ObjectInitializer);
 
 protected:
 
